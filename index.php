@@ -21,7 +21,7 @@ try {
 
     if (@$phpInput["message"]) {
         $params["chat_id"] = $phpInput["message"]["chat"]["id"];
-        $params["text"] = 'I got phrase: ' . mb_strtolower($phpInput["message"]["text"]);
+        $params["text"] = 'I got phrase!!!: ' . mb_strtolower($phpInput["message"]["text"]);
         telegramAPIRequest("sendMessage", $params);
     }
 }
