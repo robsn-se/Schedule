@@ -12,5 +12,5 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
           server: 31.31.198.123
-          username: u1571961_gitHubS
+          username: ${{vars.FTP_LOGIN}}
           password: ${{secrets.FTP_PASSWORD}}
