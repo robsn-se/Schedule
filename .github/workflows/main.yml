@@ -13,4 +13,4 @@ jobs:
         with:
           server: 31.31.198.123
           username: u1571961_gitHubS
-          password:
+          password: ${{secrets.FTP_PASSWORD}}
