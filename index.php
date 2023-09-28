@@ -9,12 +9,19 @@ try {
         die();
     }
 
+//    if (@$phpInput["message"]) {
+//        $params["chat_id"] = $phpInput["message"]["chat"]["id"];
+//        $request = mb_strtolower($phpInput["message"]["text"]);
+//        $params["text"] = getAnswerByRules($request);
+//        if (!$params["text"]) {
+//            $params["text"] = "{$phpInput["message"]["from"]["first_name"]}, я не понимаю тебя!\nЧто значит, " . quotePhrase($request) . "?\n\nДобавить слово в словарь?";
+//        }
+//        telegramAPIRequest("sendMessage", $params);
+//    }
+
     if (@$phpInput["message"]) {
-        $request = mb_strtolower($phpInput["message"]["text"]);
-        $params["text"] = $request;
-        if (!$params["text"]) {
-            $params["text"] = "ok";
-        }
+        $params["chat_id"] = $phpInput["message"]["chat"]["id"];
+        $params["text"] = 'I got phrase: ' . mb_strtolower($phpInput["message"]["text"]);
         telegramAPIRequest("sendMessage", $params);
     }
 }
