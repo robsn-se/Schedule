@@ -1,4 +1,7 @@
-on: push
+on:
+  push:
+    branches: ["main"]
+
 name: deploy to the hosting by push
 jobs: 
   FTP-deploy:

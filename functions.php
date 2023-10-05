@@ -25,6 +25,24 @@ function telegramAPIRequest(string $method, ?array $params = null): array {
     return $response;
 }
 
+function createInlineButtons(array $buttons, int $columnCount = 1): string {
+    $rowCounter = 0; // укладка ряда
+    $columnCounter = 0; // укладка в колонну
+    $result = []; // массив кнопок
+    foreach ($buttons as $button) {
+        if (!isset($result[$rowCounter])) {
+            $result[$rowCounter] = [];
+        }
+        $result[$rowCounter][] = $button;
+        $columnCounter++;
+        if($columnCounter % $columnCount) {
+            continue;
+        }
+        $rowCounter++;
+    }
+    return json_encode(["inline_keyboard" => $result], JSON_UNESCAPED_UNICODE);
+}
+
 function setHook(bool $unset = false): void {
     $params["url"] = $unset ?
         $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"]
@@ -33,3 +51,4 @@ function setHook(bool $unset = false): void {
     print_r(telegramAPIRequest("setWebhook", $params));
     exit();
 }
+
