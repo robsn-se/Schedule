@@ -51,4 +51,3 @@ function setHook(bool $unset = false): void {
     print_r(telegramAPIRequest("setWebhook", $params));
     exit();
 }
-
