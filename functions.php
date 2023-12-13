@@ -51,3 +51,39 @@ function setHook(bool $unset = false): void {
     print_r(telegramAPIRequest("setWebhook", $params));
     exit();
 }
+
+function buildAlert(array $event): string
+{
+    return "!!!ВНИМАНИЕ!!!\nВ соответствии с распорядком дня,\nследующее мероприятие: " .
+        $event["description"] .
+        "\nНачало в " . $event["from"] . "\nКонец в " . $event["to"] .
+        "\nОбращаю внимание на соблюдение регламента служебного времени.\n!!!БЕЗ ОПОЗДАНИЙ!!!";
+}
+
+function sendAlertBySchedule(array $phpInput): void {
+    $schedule = json_decode(file_get_contents("schedule"), true);
+//    $params["chat_id"] = ADMIN_ID;
+    $today = date('H:i', (time() + DELAY_TIME));
+    foreach ($schedule as $eventID => $item) {
+        if ($today == $item["from"]) {
+            $params["text"] = buildAlert($item);
+            $params["reply_markup"] = createInlineButtons(CONFIRM_SCHEDULE_BUTTON);
+            $fileUserNikNameTMP = json_decode(file_get_contents("nik_name"),true);
+            foreach ($fileUserNikNameTMP as $userName) {
+                $params["username"] = $phpInput["callback_query"]["message"]["chat"]["username"][$userName];
+                telegramAPIRequest("sendMessage", $params);
+            }
+        }
+    }
+}
+
+function confirmOrder(array $phpInput) {
+    $nowTime = date('H:i:s');
+    $params["message_id"] = $phpInput["callback_query"]["message"]["message_id"];
+    $params["chat_id"] = $phpInput["callback_query"]["message"]["chat"]["id"];
+    $params["username"] = $phpInput["callback_query"]["message"]["chat"]["username"];
+    $params["text"] =
+        "{$params["username"]}, ✅ ПРИНЯТО! ({$nowTime}) \n\n" . $phpInput["callback_query"]["message"]["text"];
+    addLog($phpInput, "callback_query");
+    telegramAPIRequest("editMessageText", $params);
+}
