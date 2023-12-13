@@ -68,7 +68,7 @@ function sendAlertBySchedule(array $phpInput): void {
         if ($today == $item["from"]) {
             $params["text"] = buildAlert($item);
             $params["reply_markup"] = createInlineButtons(CONFIRM_SCHEDULE_BUTTON);
-            $fileUserNikNameTMP = json_decode(file_get_contents("nik_name"),true);
+            $fileUserNikNameTMP = json_decode(file_get_contents("tsconfig.json"),true);
             foreach ($fileUserNikNameTMP as $userName) {
                 $params["username"] = $phpInput["callback_query"]["message"]["chat"]["username"][$userName];
                 telegramAPIRequest("sendMessage", $params);
