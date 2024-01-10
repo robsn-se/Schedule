@@ -60,17 +60,17 @@ function buildAlert(array $event): string
         "\nОбращаю внимание на соблюдение регламента служебного времени.\n!!!БЕЗ ОПОЗДАНИЙ!!!";
 }
 
-function sendAlertBySchedule(array $phpInput): void {
+function sendAlertBySchedule(): void {
     $schedule = json_decode(file_get_contents("schedule"), true);
 //    $params["chat_id"] = ADMIN_ID;
     $today = date('H:i', (time() + DELAY_TIME));
     foreach ($schedule as $eventID => $item) {
         if ($today == $item["from"]) {
             $params["text"] = buildAlert($item);
-            $params["reply_markup"] = createInlineButtons(CONFIRM_SCHEDULE_BUTTON);
-            $fileUserNikNameTMP = json_decode(file_get_contents("tsconfig.json"),true);
+//            $params["reply_markup"] = createInlineButtons(CONFIRM_SCHEDULE_BUTTON);
+            $fileUserNikNameTMP = explode("\n", file_get_contents("user_nicknames_tmp.json"));
             foreach ($fileUserNikNameTMP as $userName) {
-                $params["username"] = $phpInput["callback_query"]["message"]["chat"]["username"][$userName];
+                $params["chat_id"] = trim($userName);
                 telegramAPIRequest("sendMessage", $params);
             }
         }
@@ -86,4 +86,20 @@ function confirmOrder(array $phpInput) {
         "{$params["username"]}, ✅ ПРИНЯТО! ({$nowTime}) \n\n" . $phpInput["callback_query"]["message"]["text"];
     addLog($phpInput, "callback_query");
     telegramAPIRequest("editMessageText", $params);
+}
+
+function userRegistration(array $message) {
+    $userNicknames = json_decode(file_get_contents("user_nicknames_tmp"));
+    $user = null;
+    foreach ($userNicknames as $userData) {
+        if ($userData["username"] === $message["from"]["username"]) {
+            $user = $message["from"];
+
+
+            break;
+        }
+    }
+    if (!$user) {
+        return false;
+    }
 }
