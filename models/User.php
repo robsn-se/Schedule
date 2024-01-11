@@ -2,7 +2,7 @@
 
 namespace models;
 
-class User
+class User extends MainModel
 {
     public const MEMBER_ROLE_LEVEL = "member";
 
@@ -17,6 +17,13 @@ class User
     ];
 
     protected string $tableName = "users";
+
+    protected array $fields = [
+        "id",
+        "telegram_id",
+        "telegram_username",
+        "role_level"
+    ];
 
 
     /** @var int  */
@@ -65,17 +72,17 @@ class User
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getTelegramUsername(): int
+    public function getTelegramUsername(): string
     {
         return $this->telegramUsername;
     }
 
     /**
-     * @param int $telegramUsername
+     * @param string $telegramUsername
      */
-    public function setTelegramUsername(int $telegramUsername): void
+    public function setTelegramUsername(string $telegramUsername): void
     {
         $this->telegramUsername = $telegramUsername;
     }
@@ -96,18 +103,4 @@ class User
         $this->roleLevel = $roleLevel;
     }
 
-
-    public function save(): self
-    {
-        $sql = " INSERT INTO `{$this->tableName}`";
-
-    }
-
-    public function createSQLSet(array $fields, string $delimiter = ""): string {
-        $fieldsString = "";
-        foreach ($fields as $field => $value) {
-            $fieldsString .=  "`{$field}` = {$value} {$delimiter}";
-        }
-        return substr($fieldsString, 0, -(strlen($delimiter) + 1));
-    }
 }

@@ -1,7 +1,7 @@
 <?php
 
-function env(string $envName): mixed {
-    return $_ENV[$envName] ?? null;
+function env(string $envName, mixed $default = null): mixed {
+    return $_ENV[$envName] ?? $default;
 }
 
 /**

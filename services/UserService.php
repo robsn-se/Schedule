@@ -16,6 +16,7 @@ class UserService
         $user->setTelegramId($telegramId);
         $user->setTelegramUsername($telegramUsername);
         $user->setRoleLevel($roleLevel);
+        $user->save();
         return $user;
     }
 }

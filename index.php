@@ -6,5 +6,4 @@ require_once "core/init.php";
 //$app = new App();
 
 //print_r($app->getEnv());
-
-print_r(config("database.host"));
+\services\UserService::createUser(8555,"kfbvhkbfk");
