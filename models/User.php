@@ -26,40 +26,15 @@ class User extends MainModel
     ];
 
 
-    /** @var int  */
-    private int $id;
+    protected int $telegramId;
 
-    private int $telegramId;
+    protected string $telegramUsername;
 
-    private string $telegramUsername;
+    protected string $roleLevel;
 
-    private string $roleLevel;
-
-//    public function __construct
-//    (
-//        int $telegramId,
-//        string $telegramUsername,
-//        string $roleLevel = self::ROLE_LEVELS[0])
-//    {
-//        $this->id = rand(1,10000);
-//        $this->telegramId = $telegramId;
-//        $this->telegramUsername = $telegramUsername;
-//        $this->roleLevel = $roleLevel;
+//    public function __construct() {
+//        parent::__construct();
 //    }
-
-    /** @return int */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
 
     public function getTelegramId(): int
     {
