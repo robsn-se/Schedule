@@ -29,6 +29,7 @@ class DB
         $this->user = config("database.user");
         $this->password = config("database.password");
         $this->connect = new PDO($this->dsn, $this->user, $this->password);
+        $this->connect->exec("SET names utf8");
     }
 
     protected function createSQLSet(array $fields, string $delimiter = ","): string {

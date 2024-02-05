@@ -1,5 +1,8 @@
 <?php
-return[
+return [
+    "app" => [
+        "server_folder" => "/schedule"
+    ],
     "database" => [
         "connect" => env("DB_CONNECT", "mysql"),
         "host" => env("DB_HOST"),

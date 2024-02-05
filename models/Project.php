@@ -1,30 +1,17 @@
 <?php
 
-class Project
-{
-    private int $id;
+namespace models;
 
-    private string $name;
+class Project extends MainModel
+{
+    protected string $tableName = "projects";
+
+    protected string $name;
 
     private int $userId;
 
-    private int $active;
+    private bool $active;
 
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
 
     /**
      * @return string
@@ -59,17 +46,17 @@ class Project
     }
 
     /**
-     * @return int
+     * @return bool
      */
-    public function getActive(): int
+    public function getActive(): bool
     {
         return $this->active;
     }
 
     /**
-     * @param int $active
+     * @param bool $active
      */
-    public function setActive(int $active): void
+    public function setActive(bool $active): void
     {
         $this->active = $active;
     }
