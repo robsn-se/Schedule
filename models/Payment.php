@@ -2,10 +2,8 @@
 
 namespace models;
 
-class Payment
+class Payment extends MainModel
 {
-    private int $id;
-
     private string $date;
 
     private int $projectId;
@@ -15,22 +13,6 @@ class Payment
     private int $priceId;
 
     private array $details;
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
 
     /**
      * @return string

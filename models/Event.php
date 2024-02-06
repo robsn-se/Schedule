@@ -2,10 +2,8 @@
 
 namespace models;
 
-class Event
+class Event extends MainModel
 {
-    private int $id;
-
     private string $name;
 
     private string $description;
@@ -16,25 +14,9 @@ class Event
 
     private int $toTime;
 
-    private int $active;
+    private bool $active;
 
     private string $weekDays;
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
 
     /**
      * @return string
@@ -117,17 +99,17 @@ class Event
     }
 
     /**
-     * @return int
+     * @return bool
      */
-    public function getActive(): int
+    public function getActive(): bool
     {
         return $this->active;
     }
 
     /**
-     * @param int $active
+     * @param bool $active
      */
-    public function setActive(int $active): void
+    public function setActive(bool $active): void
     {
         $this->active = $active;
     }

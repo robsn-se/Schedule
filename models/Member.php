@@ -2,9 +2,8 @@
 
 namespace models;
 
-class Member
+class Member extends MainModel
 {
-    private int $id;
 
     private int $userId;
 
@@ -14,23 +13,7 @@ class Member
 
     private int $status;
 
-    private int $active;
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
+    private bool $active;
 
     /**
      * @return int
@@ -97,17 +80,17 @@ class Member
     }
 
     /**
-     * @return int
+     * @return bool
      */
-    public function getActive(): int
+    public function getActive(): bool
     {
         return $this->active;
     }
 
     /**
-     * @param int $active
+     * @param bool $active
      */
-    public function setActive(int $active): void
+    public function setActive(bool $active): void
     {
         $this->active = $active;
     }
