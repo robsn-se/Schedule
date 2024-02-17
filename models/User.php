@@ -32,9 +32,9 @@ class User extends MainModel
 
     protected string $roleLevel;
 
-//    public function __construct() {
-//        parent::__construct();
-//    }
+    public function __construct(?int $id = null) {
+        parent::__construct($id);
+    }
 
     public function getTelegramId(): int
     {

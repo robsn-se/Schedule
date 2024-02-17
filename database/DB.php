@@ -4,6 +4,7 @@ namespace database;
 
 use Exception;
 use PDO;
+use PDOStatement;
 use SystemFailure;
 
 class DB
@@ -58,4 +59,31 @@ class DB
         }
         return $fields;
     }
+
+    protected function select(string $tableName, ?array $fields = null, ?string $where = null): PDOStatement {
+        $stringFields = $fields ? implode(",", $fields) : "*";
+        $where = $where ?? 1;
+        $stmt = $this->connect->prepare("SELECT {$stringFields} FROM {$tableName} WHERE {$where}");
+        $stmt->execute();
+        return $stmt;
+    }
+
+    protected function selectOne(string $tableName, ?array $fields = null, ?string $where = null): array {
+        return $this->select($tableName, $fields, $where)->fetch();
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

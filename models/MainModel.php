@@ -3,6 +3,7 @@
 namespace models;
 
 use database\DB;
+use SystemFailure;
 
 class MainModel extends DB
 {
@@ -11,6 +12,12 @@ class MainModel extends DB
     protected ?int $id = null;
 
     protected string $tableName;
+
+    public function __construct(int $id)
+    {
+        $this->id = $id;
+        $this->get();
+    }
 
     public function getId(): ?int
     {
@@ -42,7 +49,25 @@ class MainModel extends DB
             }
             $fieldsData[$field] = $this->{"get" . ucfirst($camelField)}();
         }
-        $this->id = $this->insert($this->tableName, $fieldsData);
+        if ($this->id) {
+            $this->update();
+        }
+        else{
+            $this->id = $this->insert($this->tableName, $fieldsData);
+        }
+        return $this;
+    }
+
+    public function get(): self
+    {
+        $objectData = $this->selectOne($this->tableName, null, "`id` = {$this->id}");
+        foreach ($objectData as $field => $value) {
+            $camelField = $this->toCamelCase($field);
+            if (!property_exists($this, $camelField)) {
+                continue;
+            }
+            $this->{"set" . ucfirst($camelField)}($value);
+        }
         return $this;
     }
 }

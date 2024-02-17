@@ -12,7 +12,7 @@ class Payment extends MainModel
 
     private int $priceId;
 
-    private array $details;
+    private string $details;
 
     /**
      * @return string
@@ -83,7 +83,7 @@ class Payment extends MainModel
      */
     public function getDetails(): array
     {
-        return $this->details;
+        return json_decode($this->details, JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -91,7 +91,6 @@ class Payment extends MainModel
      */
     public function setDetails(string $details): void
     {
-        $this->details = json_decode($details, JSON_UNESCAPED_UNICODE);
+        $this->details = $details;
     }
-
 }
