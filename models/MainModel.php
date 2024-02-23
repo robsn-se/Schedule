@@ -13,10 +13,12 @@ class MainModel extends DB
 
     protected string $tableName;
 
-    public function __construct(int $id)
+    public function __construct(int $id = null)
     {
-        $this->id = $id;
-        $this->get();
+        if ($id) {
+            $this->id = $id;
+            $this->get();
+        }
     }
 
     public function getId(): ?int
@@ -69,5 +71,12 @@ class MainModel extends DB
             $this->{"set" . ucfirst($camelField)}($value);
         }
         return $this;
+    }
+
+    public static function getAll(): array {
+        $array = self::selectAll();
+        foreach ($array as $item) {
+
+        }
     }
 }

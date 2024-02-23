@@ -34,4 +34,8 @@ class UserService
         $user->save();
         return $user;
     }
+
+    public static function getAllUsers(): array {
+        User::
+    }
 }
