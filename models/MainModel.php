@@ -3,7 +3,7 @@
 namespace models;
 
 use database\DB;
-use SystemFailure;
+use exceptions\SystemFailure;
 
 class MainModel extends DB
 {

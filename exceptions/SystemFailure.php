@@ -1,4 +1,7 @@
 <?php
+namespace exceptions;
+
+use Exception;
 
 class SystemFailure extends Exception
 {

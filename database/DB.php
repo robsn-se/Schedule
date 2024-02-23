@@ -6,7 +6,7 @@ use Exception;
 use mysql_xdevapi\Statement;
 use PDO;
 use PDOStatement;
-use SystemFailure;
+use exceptions\SystemFailure;
 
 class DB
 {

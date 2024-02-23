@@ -3,6 +3,7 @@
 namespace services;
 
 use models\User;
+use exceptions\SystemFailure;
 
 class UserService
 {
@@ -20,14 +21,21 @@ class UserService
         return $user;
     }
 
+    /**
+     * @throws SystemFailure
+     */
     public static function updateUser
     (
         int $id,
         array $fields
     ): User {
         $user = new User($id);
-
-        return $user;
+        foreach ($fields as $key => $value) {
+            $camelKey = $user->snakeToCamel($key);
+            $user->{"set" . ucfirst($camelKey)}($value);
+        }
+        $user->save();
+        return $user->get();
     }
 
     /**

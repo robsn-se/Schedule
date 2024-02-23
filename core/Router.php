@@ -2,9 +2,6 @@
 
 namespace core;
 
-use MongoDB\Driver\Exception\ServerException;
-use SystemFailure;
-
 class Router
 {
     protected static array $routes = [];
