@@ -11,7 +11,7 @@ class MainModel extends DB
 
     protected ?int $id = null;
 
-    protected string $tableName;
+    protected static string $tableName;
 
     public function __construct(int $id = null)
     {
@@ -24,6 +24,11 @@ class MainModel extends DB
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     function camelToSnake(string $string)
@@ -40,9 +45,12 @@ class MainModel extends DB
         return lcfirst(str_replace('_', '', ucwords($string, '_')));
     }
 
+    /**
+     * @throws SystemFailure
+     */
     public function save(): self
     {
-        $this->fields = $this->getTableFields($this->tableName);
+        $this->fields = self::getTableFields(static::$tableName);
         $fieldsData = [];
         foreach ($this->fields as $field) {
             $camelField = $this->toCamelCase($field);
@@ -52,17 +60,17 @@ class MainModel extends DB
             $fieldsData[$field] = $this->{"get" . ucfirst($camelField)}();
         }
         if ($this->id) {
-            $this->update();
+            $this->update(static::$tableName, $fieldsData, "`id` = {$this->id}");
         }
         else{
-            $this->id = $this->insert($this->tableName, $fieldsData);
+            $this->id = $this->insert(static::$tableName, $fieldsData);
         }
         return $this;
     }
 
     public function get(): self
     {
-        $objectData = $this->selectOne($this->tableName, null, "`id` = {$this->id}");
+        $objectData = self::selectOne(static::$tableName, null, "`id` = {$this->id}");
         foreach ($objectData as $field => $value) {
             $camelField = $this->toCamelCase($field);
             if (!property_exists($this, $camelField)) {
@@ -74,9 +82,32 @@ class MainModel extends DB
     }
 
     public static function getAll(): array {
-        $array = self::selectAll();
+        $objects = [];
+        $array = self::selectAll(static::$tableName);
         foreach ($array as $item) {
-
+            $object = new static();
+            foreach ($item as $field => $value) {
+                $camelField = $object->toCamelCase($field);
+                if (!property_exists($object, $camelField)) {
+                    continue;
+                }
+                $object->{"set" . ucfirst($camelField)}($value);
+            }
+            $objects[] = $object;
         }
+        return $objects;
+    }
+
+    public function toArray(): array
+    {
+        $array = [];
+        foreach ($this->fields as $field) {
+            $camelField = $this->toCamelCase($field);
+            if (!property_exists($this, $camelField)) {
+                continue;
+            }
+            $array[$field] = $this->{"get" . ucfirst($camelField)}();
+        }
+        return $array;
     }
 }

@@ -18,8 +18,6 @@ class DB
 
     private static string $password;
 
-
-
     public static function init(): void {
         self::$dsn = config("database.connect")
             . ":host=" . config("database.host")
@@ -30,7 +28,7 @@ class DB
         self::$connect->exec("SET names utf8");
     }
 
-    protected function createSQLSet(array $fields, string $delimiter = ","): string {
+    protected static function createSQLSet(array $fields, string $delimiter = ","): string {
         $fieldsString = "";
         foreach ($fields as $field) {
             $fieldsString .=  "{$field} = ? {$delimiter}";
@@ -38,25 +36,25 @@ class DB
         return substr($fieldsString, 0, -(strlen($delimiter) + 1));
     }
 
-    public function insert(string $tableName, array $fieldsData): int {
-        $stmt = self::$connect->prepare("INSERT INTO {$tableName} SET {$this->createSQLSet(array_keys($fieldsData))}");
+    public static function insert(string $tableName, array $fieldsData): int {
+        $stmt = self::$connect->prepare("INSERT INTO {$tableName} SET " . self::createSQLSet(array_keys($fieldsData)));
         if (!$stmt->execute(array_values($fieldsData)) || !$id = self::$connect->lastInsertId()) {
             throw new SystemFailure("Error while inserting to `{$tableName}`", $stmt->errorInfo());
         }
         return (int) $id;
     }
 
-    public function update(int $id, array $fieldsData, string $tableName): int {
-        $stmt = self::$connect->prepare("UPDATE {$tableName} SET {$this->createSQLSet(array_keys($fieldsData))}");
+    public static function update(string $tableName, array $fieldsData, string $where): bool {
+        $stmt = self::$connect->prepare(
+            "UPDATE {$tableName} SET " . self::createSQLSet(array_keys($fieldsData)) . " WHERE {$where}"
+        );
         if (!$stmt->execute(array_values($fieldsData)) || $stmt->rowCount()) {
             throw new SystemFailure("Error while updating to `{$tableName}`", $stmt->errorInfo());
         }
-        return $id;
+        return true;
     }
 
-    protected function  getTableFields(string $tableName) {
-//        $sth = $this->connect->prepare("SHOW COLUMNS FROM ?");
-//        $sth->execute([$tableName]);
+    protected static function getTableFields(string $tableName) {
         $sth = self::$connect->query("SHOW COLUMNS FROM $tableName");
         $fields = [];
         foreach ($sth as $field) {
@@ -65,7 +63,7 @@ class DB
         return $fields;
     }
 
-    protected function select(string $tableName, ?array $fields = null, ?string $where = null): PDOStatement {
+    protected static function select(string $tableName, ?array $fields = null, ?string $where = null): PDOStatement {
         $stringFields = $fields ? implode(",", $fields) : "*";
         $where = $where ?? 1;
         $stmt = self::$connect->prepare("SELECT {$stringFields} FROM {$tableName} WHERE {$where}");
@@ -73,11 +71,11 @@ class DB
         return $stmt;
     }
 
-    protected function selectOne(string $tableName, ?array $fields = null, ?string $where = null): array {
-        return $this->select($tableName, $fields, $where)->fetch();
+    protected static function selectOne(string $tableName, ?array $fields = null, ?string $where = null): array {
+        return self::select($tableName, $fields, $where)->fetch();
     }
 
-    public function selectAll(string $tableName, ?array $fields = null): array {
-        return $this->select($tableName, $fields)->fetchAll();
+    public static function selectAll(string $tableName, ?array $fields = null): array {
+        return self::select($tableName, $fields)->fetchAll();
     }
 }

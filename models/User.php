@@ -16,7 +16,7 @@ class User extends MainModel
         self::SUPER_ADMIN_ROLE_LEVEL
     ];
 
-    protected string $tableName = "users";
+    protected static string $tableName = "users";
 
     protected array $fields = [
         "id",
@@ -26,7 +26,7 @@ class User extends MainModel
     ];
 
 
-    protected int $telegramId;
+    protected string $telegramId;
 
     protected string $telegramUsername;
 
@@ -36,12 +36,12 @@ class User extends MainModel
         parent::__construct($id);
     }
 
-    public function getTelegramId(): int
+    public function getTelegramId(): string
     {
         return $this->telegramId;
     }
 
-    public function setTelegramId(int $telegramId): void
+    public function setTelegramId(string $telegramId): void
     {
         $this->telegramId = $telegramId;
     }

@@ -12,8 +12,8 @@ Router::addRoute("PUT", "/update_user/{id}", function ($id) {
     echo UserController::updateUser($id);
 });
 
-Router::addRoute("GET", "/get_all_users", function ($id) {
-    echo UserController::updateUser($id);
+Router::addRoute("GET", "/get_all_users", function () {
+    echo UserController::getAllUsers();
 });
 
 
