@@ -2,6 +2,7 @@
 
 namespace services;
 
+use exceptions\SystemFailure;
 use models\Member;
 
 class MemberService
@@ -22,5 +23,30 @@ class MemberService
         $member->setActive($active);
         $member->save();
         return $member;
+    }
+
+    /**
+     * @throws SystemFailure
+     */
+    public static function updateMember
+    (
+        int $id,
+        array $fields
+    ): Member {
+        $member = new Member($id);
+        foreach ($fields as $key => $value) {
+            $camelKey = $member->snakeToCamel($key);
+            $member->{"set" . ucfirst($camelKey)}($value);
+        }
+        $member->save();
+        return $member->get();
+    }
+
+
+    /**
+     * @return Member[]
+     */
+    public static function getAllMembers(): array {
+        return Member::getAll();
     }
 }

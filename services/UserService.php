@@ -38,6 +38,7 @@ class UserService
         return $user->get();
     }
 
+
     /**
      * @return User[]
      */

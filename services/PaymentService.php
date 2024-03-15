@@ -2,6 +2,7 @@
 
 namespace services;
 
+use exceptions\SystemFailure;
 use models\Payment;
 
 class PaymentService
@@ -22,5 +23,30 @@ class PaymentService
         $payment->setDetails($details);
         $payment->save();
         return $payment;
+    }
+
+    /**
+     * @throws SystemFailure
+     */
+    public static function updatePayment
+    (
+        int $id,
+        array $fields
+    ): Payment {
+        $payment = new Payment($id);
+        foreach ($fields as $key => $value) {
+            $camelKey = $payment->snakeToCamel($key);
+            $payment->{"set" . ucfirst($camelKey)}($value);
+        }
+        $payment->save();
+        return $payment->get();
+    }
+
+
+    /**
+     * @return Payment[]
+     */
+    public static function getAllPayments(): array {
+        return Payment::getAll();
     }
 }

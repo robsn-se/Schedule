@@ -2,6 +2,7 @@
 
 namespace services;
 
+use exceptions\SystemFailure;
 use models\Project;
 
 
@@ -19,5 +20,27 @@ class ProjectService
         $project->setActive($active);
         $project->save();
         return $project;
+    }
+    /**
+     * @throws SystemFailure
+     */
+    public static function updateProject
+    (
+        int $id,
+        array $fields
+    ): Project {
+        $project = new Project($id);
+        foreach ($fields as $key => $value) {
+            $camelKey = $project->snakeToCamel($key);
+            $project->{"set" . ucfirst($camelKey)}($value);
+        }
+        $project->save();
+        return $project->get();
+    }
+    /**
+     * @return Project[]
+     */
+    public static function getAllProjects(): array {
+        return Project::getAll();
     }
 }
