@@ -71,6 +71,11 @@ class MainModel extends DB
     public function get(): self
     {
         $objectData = self::selectOne(static::$tableName, null, "`id` = {$this->id}");
+        if (!$objectData) {
+            $id = $this->id;
+            $this->id = null;
+            throw new SystemFailure("Object ID `{$id} not found`");
+        }
         foreach ($objectData as $field => $value) {
             $camelField = $this->toCamelCase($field);
             if (!property_exists($this, $camelField)) {
@@ -109,5 +114,9 @@ class MainModel extends DB
             $array[$field] = $this->{"get" . ucfirst($camelField)}();
         }
         return $array;
+    }
+
+    public static function dateToTimeStamp(string $date): string {
+        return date('Y-m-d H:i:s', strtotime($date));
     }
 }

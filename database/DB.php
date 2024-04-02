@@ -71,7 +71,7 @@ class DB
         return $stmt;
     }
 
-    protected static function selectOne(string $tableName, ?array $fields = null, ?string $where = null): array {
+    protected static function selectOne(string $tableName, ?array $fields = null, ?string $where = null): array|false {
         return self::select($tableName, $fields, $where)->fetch();
     }
 

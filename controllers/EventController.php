@@ -8,14 +8,14 @@ use services\EventService;
 class EventController
 {
     public static function createEvent(): string {
+        $bodyArray = Request::getBodyArray();
         $event = EventService::createEvent(
-            "rob",
-            "ndj_jxj",
-            5,
-            4,
-            3,
-            true,
-            "monday"
+            $bodyArray["name"],
+            $bodyArray["description"],
+            $bodyArray["project_id"],
+            $bodyArray["from_time"],
+            $bodyArray["to_time"],
+            $bodyArray["week_days"],
         );
         return "<pre>" . print_r($event, true);
     }

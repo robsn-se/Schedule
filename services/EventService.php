@@ -12,9 +12,8 @@ class EventService
         string $name,
         string $description,
         int $projectId,
-        int $fromTime,
-        int $toTime,
-        bool $active,
+        string $fromTime,
+        string $toTime,
         string $weekDays
     ): Event {
         $event = new Event();
@@ -23,7 +22,6 @@ class EventService
         $event->setProjectId($projectId);
         $event->setFromTime($fromTime);
         $event->setToTime($toTime);
-        $event->setActive($active);
         $event->setWeekDays($weekDays);
         $event->save();
         return $event;
@@ -38,6 +36,9 @@ class EventService
         array $fields
     ): Event {
         $event = new Event($id);
+        if (!$event->getId()) {
+            throw new SystemFailure("Event ID `{$id}` not found!");
+        }
         foreach ($fields as $key => $value) {
             $camelKey = $event->snakeToCamel($key);
             $event->{"set" . ucfirst($camelKey)}($value);

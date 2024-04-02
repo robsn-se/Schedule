@@ -10,13 +10,22 @@ class Event extends MainModel
 
     private int $projectId;
 
-    private int $fromTime;
+    private string $fromTime;
 
-    private int $toTime;
+    private string $toTime;
 
-    private bool $active;
+    private bool $active = true;
 
     private string $weekDays;
+
+    protected static string $tableName = "events";
+
+    protected array $fields = [
+        "id",
+        "name",
+        "description",
+        "project_id",
+    ];
 
     /**
      * @return string
@@ -67,35 +76,35 @@ class Event extends MainModel
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getFromTime(): int
+    public function getFromTime(): string
     {
         return $this->fromTime;
     }
 
     /**
-     * @param int $fromTime
+     * @param string $fromTime
      */
-    public function setFromTime(int $fromTime): void
+    public function setFromTime(string $fromTime): void
     {
-        $this->fromTime = $fromTime;
+        $this->fromTime = self::dateToTimeStamp($fromTime);
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getToTime(): int
+    public function getToTime(): string
     {
         return $this->toTime;
     }
 
     /**
-     * @param int $toTime
+     * @param string $toTime
      */
-    public function setToTime(int $toTime): void
+    public function setToTime(string $toTime): void
     {
-        $this->toTime = $toTime;
+        $this->toTime = self::dateToTimeStamp($toTime);
     }
 
     /**
