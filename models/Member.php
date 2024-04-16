@@ -13,7 +13,18 @@ class Member extends MainModel
 
     private int $status;
 
-    private bool $active;
+    private bool $active = true;
+
+
+    protected static string $tableName = "members";
+
+    protected array $fields = [
+        "id",
+        "user_id",
+        "project_id",
+        "name",
+        "status",
+    ];
 
     /**
      * @return int

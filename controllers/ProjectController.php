@@ -9,7 +9,7 @@ class ProjectController
 {
     public static function createProject(): string {
         $bodyArray = Request::getBodyArray();
-        $project = ProjectService::createProject($bodyArray["name"], $bodyArray["user_id"], $bodyArray["active"]);
+        $project = ProjectService::createProject($bodyArray["name"], $bodyArray["user_id"], $bodyArray["delay_time"]);
         return "<pre>" . print_r($project->toArray(), true);
     }
 

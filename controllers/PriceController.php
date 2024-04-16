@@ -8,8 +8,9 @@ use services\PriceService;
 class PriceController
 {
     public static function createPrice(): string {
-        $price = PriceService::createPrice(02.02,"800", 899, true);
-        return "<pre>" . print_r($price, true);
+        $bodyArray = Request::getBodyArray();
+        $price = PriceService::createPrice($bodyArray["date"], $bodyArray["duration"], $bodyArray["sum"]);
+        return "<pre>" . print_r($price->toArray(), true);
     }
 
     public static function updatePrice(int $id): string {

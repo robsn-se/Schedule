@@ -8,8 +8,15 @@ use services\MemberService;
 class MemberController
 {
     public static function createMember(): string {
-        $member = MemberService::createMember(8555, 88,"ndj_jxj", 1, true);
-        return "<pre>" . print_r($member, true);
+        $bodyArray = Request::getBodyArray();
+        $member = MemberService::createMember(
+            $bodyArray["id"],
+            $bodyArray["user_id"],
+            $bodyArray["project_id"],
+            $bodyArray["name"],
+            $bodyArray["status"],
+        );
+        return "<pre>" . print_r($member->toArray(), true);
     }
 
     public static function updateMember(int $id): string {

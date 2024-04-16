@@ -10,7 +10,18 @@ class Price extends MainModel
 
     private int $sum;
 
-    private bool $active;
+    private bool $active = true;
+
+
+    protected static string $tableName = "prices";
+
+    protected array $fields = [
+        "id",
+        "date",
+        "duration",
+        "sum"
+    ];
+
 
     /**
      * @return string

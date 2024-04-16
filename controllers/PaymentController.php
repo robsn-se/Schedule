@@ -8,8 +8,15 @@ use services\PaymentService;
 class PaymentController
 {
     public static function createPayment(): string {
-        $payment = PaymentService::createPayment(8555,55,55,77, [88, 99]);
-        return "<pre>" . print_r($payment, true);
+        $bodyArray = Request::getBodyArray();
+        $payment = PaymentService::createPayment(
+            $bodyArray["date"],
+            $bodyArray["project_id"],
+            $bodyArray["user_id"],
+            $bodyArray["date"],
+            $bodyArray["price_id"]
+        );
+        return "<pre>" . print_r($payment->toArray(), true);
     }
 
     public static function updatePayment(int $id): string {

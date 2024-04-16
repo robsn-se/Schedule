@@ -4,14 +4,24 @@ namespace models;
 
 class Project extends MainModel
 {
-    protected string $tableName = "projects";
-
     protected string $name;
 
     private int $userId;
 
-    private bool $active;
+    private bool $active = true;
 
+    private string $delay_time;
+
+
+
+    protected static string $tableName = "projects";
+
+    protected array $fields = [
+        "id",
+        "name",
+        "user_id",
+        "delay_time"
+    ];
 
     /**
      * @return string
@@ -61,6 +71,21 @@ class Project extends MainModel
         $this->active = $active;
     }
 
+    /**
+     * @return string
+     */
+    public function getDelayTime(): string
+    {
+        return $this->delay_time;
+    }
+
+    /**
+     * @param string $delay_time
+     */
+    public function setDelayTime(string $delay_time): void
+    {
+        $this->delay_time = self::dateToTimeStamp($delay_time);
+    }
 
 
 }

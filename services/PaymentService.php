@@ -13,7 +13,7 @@ class PaymentService
         int $projectId,
         int $userId,
         int $priceId,
-        array $details
+        string $details
     ): Payment {
         $payment = new Payment();
         $payment->setDate($date);
@@ -34,6 +34,9 @@ class PaymentService
         array $fields
     ): Payment {
         $payment = new Payment($id);
+        if (!$payment->getId()) {
+            throw new SystemFailure("Project ID `{$id}` not found!");
+        }
         foreach ($fields as $key => $value) {
             $camelKey = $payment->snakeToCamel($key);
             $payment->{"set" . ucfirst($camelKey)}($value);

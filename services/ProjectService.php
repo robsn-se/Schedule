@@ -12,12 +12,12 @@ class ProjectService
     (
         string $name,
         int $userId,
-        bool $active
+        string $delay_time
     ): Project {
         $project = new Project();
         $project->setName($name);
         $project->setUserId($userId);
-        $project->setActive($active);
+        $project->setDelayTime($delay_time);
         $project->save();
         return $project;
     }
@@ -30,6 +30,9 @@ class ProjectService
         array $fields
     ): Project {
         $project = new Project($id);
+        if (!$project->getId()) {
+            throw new SystemFailure("Project ID `{$id}` not found!");
+        }
         foreach ($fields as $key => $value) {
             $camelKey = $project->snakeToCamel($key);
             $project->{"set" . ucfirst($camelKey)}($value);

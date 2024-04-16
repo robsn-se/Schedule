@@ -14,6 +14,17 @@ class Payment extends MainModel
 
     private string $details;
 
+
+    protected static string $tableName = "payments";
+
+    protected array $fields = [
+        "id",
+        "date",
+        "project_id",
+        "user_id",
+        "price_id",
+        "details"
+    ];
     /**
      * @return string
      */
