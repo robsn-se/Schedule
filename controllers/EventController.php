@@ -33,4 +33,9 @@ class EventController
         }
         return "<pre>" . print_r($events, true);
     }
+
+    public static function deleteEventById(int $id): string {
+        EventService::deleteEventById($id);
+        echo "Event {$id} has been deleted successfully";
+    }
 }

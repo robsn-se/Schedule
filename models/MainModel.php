@@ -119,4 +119,8 @@ class MainModel extends DB
     public static function dateToTimeStamp(string $date): string {
         return date('Y-m-d H:i:s', strtotime($date));
     }
+
+    public function delete(): void {
+        self::deleteById(static::$tableName, $this->id);
+    }
 }

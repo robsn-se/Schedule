@@ -90,11 +90,11 @@ class Payment extends MainModel
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getDetails(): array
+    public function getDetails(): string
     {
-        return json_decode($this->details, JSON_UNESCAPED_UNICODE);
+        return $this->details;
     }
 
     /**

@@ -25,4 +25,9 @@ class UserController
         }
         return "<pre>" . print_r($users, true);
     }
+
+    public static function deleteUserById(int $id): string {
+        UserService::deleteUserById($id);
+        echo "User {$id} has been deleted successfully";
+    }
 }

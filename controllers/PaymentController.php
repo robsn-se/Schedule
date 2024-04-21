@@ -13,8 +13,8 @@ class PaymentController
             $bodyArray["date"],
             $bodyArray["project_id"],
             $bodyArray["user_id"],
-            $bodyArray["date"],
-            $bodyArray["price_id"]
+            $bodyArray["price_id"],
+            $bodyArray["details"]
         );
         return "<pre>" . print_r($payment->toArray(), true);
     }
@@ -31,5 +31,10 @@ class PaymentController
             $payments[$key] = $payment->toArray();
         }
         return "<pre>" . print_r($payments, true);
+    }
+
+    public static function deletePaymentById(int $id): string {
+        PaymentController::deletePaymentById($id);
+        echo "Payment {$id} has been deleted successfully";
     }
 }

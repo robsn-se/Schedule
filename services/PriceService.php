@@ -47,4 +47,10 @@ class PriceService
     public static function getAllPrices(): array {
         return Price::getAll();
     }
+
+    public static function deletePriceById(int $id): void {
+        $price = new Price($id);
+        $price->delete();
+        unset($price);
+    }
 }

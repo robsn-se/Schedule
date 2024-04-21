@@ -26,4 +26,9 @@ class PriceController
         }
         return "<pre>" . print_r($prices, true);
     }
+
+    public static function deletePriceById(int $id): string {
+        PriceService::deletePriceById($id);
+        echo "Price {$id} has been deleted successfully";
+    }
 }

@@ -45,4 +45,10 @@ class UserService
     public static function getAllUsers(): array {
         return User::getAll();
     }
+
+    public static function deleteUserById(int $id): void {
+        $user = new User($id);
+        $user->delete();
+        unset($user);
+    }
 }

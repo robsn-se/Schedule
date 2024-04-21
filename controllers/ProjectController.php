@@ -26,4 +26,9 @@ class ProjectController
         }
         return "<pre>" . print_r($projects, true);
     }
+
+    public static function deleteProjectById(int $id): string {
+        ProjectService::deleteProjectById($id);
+        echo "Project {$id} has been deleted successfully";
+    }
 }

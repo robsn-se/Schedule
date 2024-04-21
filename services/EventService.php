@@ -53,4 +53,10 @@ class EventService
     public static function getAllEvents(): array {
         return Event::getAll();
     }
+
+    public static function deleteEventById(int $id): void {
+        $Event = new Event($id);
+        $Event->delete();
+        unset($Event);
+    }
 }

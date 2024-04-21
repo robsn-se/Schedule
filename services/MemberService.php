@@ -50,4 +50,10 @@ class MemberService
     public static function getAllMembers(): array {
         return Member::getAll();
     }
+
+    public static function deleteMemberById(int $id): void {
+        $member = new Member($id);
+        $member->delete();
+        unset($member);
+    }
 }

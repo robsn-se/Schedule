@@ -78,4 +78,18 @@ class DB
     public static function selectAll(string $tableName, ?array $fields = null): array {
         return self::select($tableName, $fields)->fetchAll();
     }
+
+    public static function deleteById(string $tableName, int $id) {
+        $id = self::selectOne($tableName, ["id"], "id={$id}")["id"] ?? null;
+        if (!$id) {
+            throw new SystemFailure("Row with {$id} not found in {$tableName}");
+        }
+        $stmt = self::$connect->prepare(
+            "DELETE FROM {$tableName} WHERE `id` = ?;"
+        );
+        if (!$stmt->execute([$id]) || $stmt->rowCount()) {
+            throw new SystemFailure("Error while deleting {$id} in `{$tableName}`", $stmt->errorInfo());
+        }
+        return true;
+    }
 }

@@ -20,6 +20,10 @@ Router::addRoute("GET", "/get_all_users", function () {
     echo UserController::getAllUsers();
 });
 
+Router::addRoute("DELETE", "/delete_user/{id}", function ($id) {
+    echo UserController::deleteUserById($id);
+});
+
 
 //###
 

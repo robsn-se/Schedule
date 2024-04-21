@@ -52,4 +52,10 @@ class PaymentService
     public static function getAllPayments(): array {
         return Payment::getAll();
     }
+
+    public static function deletePaymentById(int $id): void {
+        $payment = new Payment($id);
+        $payment->delete();
+        unset($payment);
+    }
 }

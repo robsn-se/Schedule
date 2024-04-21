@@ -10,11 +10,10 @@ class MemberController
     public static function createMember(): string {
         $bodyArray = Request::getBodyArray();
         $member = MemberService::createMember(
-            $bodyArray["id"],
             $bodyArray["user_id"],
             $bodyArray["project_id"],
             $bodyArray["name"],
-            $bodyArray["status"],
+            $bodyArray["status"]
         );
         return "<pre>" . print_r($member->toArray(), true);
     }
@@ -31,5 +30,10 @@ class MemberController
             $members[$key] = $member->toArray();
         }
         return "<pre>" . print_r($members, true);
+    }
+
+    public static function deleteMemberById(int $id): string {
+        MemberService::deleteMemberById($id);
+        echo "Member {$id} has been deleted successfully";
     }
 }
