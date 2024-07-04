@@ -9,7 +9,12 @@ class PriceController
 {
     public static function createPrice(): string {
         $bodyArray = Request::getBodyArray();
-        $price = PriceService::createPrice($bodyArray["date"], $bodyArray["duration"], $bodyArray["sum"]);
+        $price = PriceService::createPrice(
+            $bodyArray["date"],
+            $bodyArray["duration"],
+            $bodyArray["sum"],
+            $bodyArray["project_id"]
+        );
         return "<pre>" . print_r($price->toArray(), true);
     }
 
@@ -29,6 +34,6 @@ class PriceController
 
     public static function deletePriceById(int $id): string {
         PriceService::deletePriceById($id);
-        echo "Price {$id} has been deleted successfully";
+        return "Price {$id} has been deleted successfully";
     }
 }

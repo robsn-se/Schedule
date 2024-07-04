@@ -36,6 +36,6 @@ class EventController
 
     public static function deleteEventById(int $id): string {
         EventService::deleteEventById($id);
-        echo "Event {$id} has been deleted successfully";
+        return "Event {$id} has been deleted successfully";
     }
 }

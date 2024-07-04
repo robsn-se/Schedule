@@ -6,8 +6,6 @@ class Payment extends MainModel
 {
     private string $date;
 
-    private int $projectId;
-
     private int $userId;
 
     private int $priceId;
@@ -22,7 +20,6 @@ class Payment extends MainModel
         "date",
         "project_id",
         "user_id",
-        "price_id",
         "details"
     ];
     /**
@@ -39,22 +36,6 @@ class Payment extends MainModel
     public function setDate(string $date): void
     {
         $this->date = $date;
-    }
-
-    /**
-     * @return int
-     */
-    public function getProjectId(): int
-    {
-        return $this->projectId;
-    }
-
-    /**
-     * @param int $projectId
-     */
-    public function setProjectId(int $projectId): void
-    {
-        $this->projectId = $projectId;
     }
 
     /**

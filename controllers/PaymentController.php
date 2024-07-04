@@ -11,7 +11,6 @@ class PaymentController
         $bodyArray = Request::getBodyArray();
         $payment = PaymentService::createPayment(
             $bodyArray["date"],
-            $bodyArray["project_id"],
             $bodyArray["user_id"],
             $bodyArray["price_id"],
             $bodyArray["details"]
@@ -34,7 +33,7 @@ class PaymentController
     }
 
     public static function deletePaymentById(int $id): string {
-        PaymentController::deletePaymentById($id);
-        echo "Payment {$id} has been deleted successfully";
+        PaymentService::deletePaymentById($id);
+        return "Payment {$id} has been deleted successfully";
     }
 }

@@ -103,6 +103,27 @@ Router::addRoute("POST", "/create_member", function () {
 Router::addRoute("GET", "/get_all_members", function () {
     echo MemberController::getAllMembers();
 });
+
+
+
+Router::addRoute("DELETE", "/delete_event/{id}", function ($id) {
+    echo EventController::deleteEventById($id);
+});
+Router::addRoute("DELETE", "/delete_member/{id}", function ($id) {
+    echo MemberController::deleteMemberById($id);
+});
+Router::addRoute("DELETE", "/delete_payment/{id}", function ($id) {
+    echo PaymentController::deletePaymentById($id);
+});
+Router::addRoute("DELETE", "/delete_price/{id}", function ($id) {
+    echo PriceController::deletePriceById($id);
+});
+Router::addRoute("DELETE", "/delete_project/{id}", function ($id) {
+    echo ProjectController::deleteProjectById($id);
+});
+Router::addRoute("DELETE", "/delete_user/{id}", function ($id) {
+    echo UserController::deleteUserById($id);
+});
 //Router::addRoute("GET", "/create_payment", function () {
 //    echo PaymentController::createPayment();
 //});

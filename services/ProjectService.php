@@ -47,6 +47,10 @@ class ProjectService
         return Project::getAll();
     }
 
+    public static function getProjectById(int $id): Project {
+       return new Project($id);
+    }
+
     public static function deleteProjectById(int $id): void {
         $project = new Project($id);
         $project->delete();

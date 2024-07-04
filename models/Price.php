@@ -12,6 +12,8 @@ class Price extends MainModel
 
     private bool $active = true;
 
+    private int $project_id;
+
 
     protected static string $tableName = "prices";
 
@@ -19,7 +21,8 @@ class Price extends MainModel
         "id",
         "date",
         "duration",
-        "sum"
+        "sum",
+        "project_id"
     ];
 
 
@@ -85,5 +88,22 @@ class Price extends MainModel
     public function setActive(bool $active): void
     {
         $this->active = $active;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getProjectId(): int
+    {
+        return $this->project_id;
+    }
+
+    /**
+     * @param int $project_id
+     */
+    public function setProjectId(int $project_id): void
+    {
+        $this->project_id = $project_id;
     }
 }

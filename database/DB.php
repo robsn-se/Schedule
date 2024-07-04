@@ -48,7 +48,7 @@ class DB
         $stmt = self::$connect->prepare(
             "UPDATE {$tableName} SET " . self::createSQLSet(array_keys($fieldsData)) . " WHERE {$where}"
         );
-        if (!$stmt->execute(array_values($fieldsData)) || $stmt->rowCount()) {
+        if (!$stmt->execute(array_values($fieldsData))) {
             throw new SystemFailure("Error while updating to `{$tableName}`", $stmt->errorInfo());
         }
         return true;
@@ -87,7 +87,7 @@ class DB
         $stmt = self::$connect->prepare(
             "DELETE FROM {$tableName} WHERE `id` = ?;"
         );
-        if (!$stmt->execute([$id]) || $stmt->rowCount()) {
+        if (!$stmt->execute([$id])) {
             throw new SystemFailure("Error while deleting {$id} in `{$tableName}`", $stmt->errorInfo());
         }
         return true;

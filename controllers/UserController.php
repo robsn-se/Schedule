@@ -28,6 +28,6 @@ class UserController
 
     public static function deleteUserById(int $id): string {
         UserService::deleteUserById($id);
-        echo "User {$id} has been deleted successfully";
+        return "User {$id} has been deleted successfully";
     }
 }

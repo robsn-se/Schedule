@@ -34,6 +34,6 @@ class MemberController
 
     public static function deleteMemberById(int $id): string {
         MemberService::deleteMemberById($id);
-        echo "Member {$id} has been deleted successfully";
+        return "Member {$id} has been deleted successfully";
     }
 }

@@ -29,6 +29,6 @@ class ProjectController
 
     public static function deleteProjectById(int $id): string {
         ProjectService::deleteProjectById($id);
-        echo "Project {$id} has been deleted successfully";
+        return "Project {$id} has been deleted successfully";
     }
 }

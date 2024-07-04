@@ -16,10 +16,11 @@ class EventService
         string $toTime,
         string $weekDays
     ): Event {
+        $project = ProjectService::getProjectById($projectId);
         $event = new Event();
         $event->setName($name);
         $event->setDescription($description);
-        $event->setProjectId($projectId);
+        $event->setProjectId($project->getId());
         $event->setFromTime($fromTime);
         $event->setToTime($toTime);
         $event->setWeekDays($weekDays);

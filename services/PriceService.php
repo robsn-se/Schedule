@@ -12,11 +12,13 @@ class PriceService
         string $date,
         int $duration,
         int $sum,
+        int $project_id,
     ): Price {
         $price = new Price();
         $price->setDate($date);
         $price->setDuration($duration);
         $price->setSum($sum);
+        $price->setProjectId($project_id);
         $price->save();
         return $price;
     }
