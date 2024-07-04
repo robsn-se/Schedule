@@ -13,6 +13,7 @@ return [
 
     "telegram" => [
         "api_url" => "https://api.telegram.org/bot",
+        "token" => env("TOKEN"),
     ],
 
     "logs" => [
