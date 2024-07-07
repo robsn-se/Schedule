@@ -2,6 +2,7 @@
 namespace exceptions;
 
 use Exception;
+use Throwable;
 
 class SystemFailure extends Exception
 {

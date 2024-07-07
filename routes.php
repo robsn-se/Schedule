@@ -5,6 +5,7 @@ use controllers\MemberController;
 use controllers\PaymentController;
 use controllers\PriceController;
 use controllers\ProjectController;
+use controllers\TelegramController;
 use controllers\UserController;
 use core\Router;
 
@@ -124,6 +125,18 @@ Router::addRoute("DELETE", "/delete_project/{id}", function ($id) {
 Router::addRoute("DELETE", "/delete_user/{id}", function ($id) {
     echo UserController::deleteUserById($id);
 });
+
+
+
+Router::addRoute("GET", "/set_telegram_hook/{set}", function ($set) {
+    echo TelegramController::setHook((int) $set);
+});
+Router::addRoute("POST", \bot\BotAPI::SERVER_ENTRE_POINT, function () {
+
+});
+
+
+
 //Router::addRoute("GET", "/create_payment", function () {
 //    echo PaymentController::createPayment();
 //});

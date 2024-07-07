@@ -1,12 +1,19 @@
 <?php
 
-namespace models;
+namespace bot;
 
 class BotAPI
 {
+    const SERVER_PROJECT_FOLDER = "/schedule";
+
+    const API_ENTRE_POINT = "/telegram_hook_entre_point";
+
+    const SERVER_ENTRE_POINT = self::SERVER_PROJECT_FOLDER . self::API_ENTRE_POINT;
+
     private static string $token;
 
     private static string $apiUrl;
+
     /**
      * @throws \Exception
      */
@@ -15,7 +22,7 @@ class BotAPI
         self::$apiUrl = config("telegram.api_url");
     }
 
-    function sendRequest(string $method, ?array $params = null): array {
+    public static function sendRequest(string $method, ?array $params = null): array {
         $response = file_get_contents(
             self::$apiUrl . self::$token . "/" . $method . "?" . http_build_query($params)
         );
@@ -25,12 +32,12 @@ class BotAPI
         return $response;
     }
 
-    function setHook(bool $unset = false): void {
+    public static function setHook(bool $unset = false): array {
         $params["url"] = $unset ?
-            $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"]
+            $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . self::SERVER_ENTRE_POINT
             : "";
-        echo "<pre>";
-        print_r(self::sendRequest("setWebhook", $params));
-        exit();
+        $response = self::sendRequest("setWebhook", $params);
+        $response["url"] = $params["url"];
+        return $response;
     }
 }
