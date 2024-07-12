@@ -131,8 +131,8 @@ Router::addRoute("DELETE", "/delete_user/{id}", function ($id) {
 Router::addRoute("GET", "/set_telegram_hook/{set}", function ($set) {
     echo TelegramController::setHook((int) $set);
 });
-Router::addRoute("POST", \bot\BotAPI::SERVER_ENTRE_POINT, function () {
-
+Router::addRoute("POST", \bot\BotAPI::API_ENTRE_POINT, function () {
+    echo TelegramController::hookEntrePoint();
 });
 
 

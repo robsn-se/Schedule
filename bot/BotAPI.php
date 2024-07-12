@@ -2,17 +2,23 @@
 
 namespace bot;
 
+use core\Log;
+
 class BotAPI
 {
     const SERVER_PROJECT_FOLDER = "/schedule";
 
     const API_ENTRE_POINT = "/telegram_hook_entre_point";
 
-    const SERVER_ENTRE_POINT = self::SERVER_PROJECT_FOLDER . self::API_ENTRE_POINT;
+    const SERVER_ENTRE_POINT = self::SERVER_PROJECT_FOLDER . self::API_ENTRE_POINT; // потому что у нас на сервере несколько ботов
+
+    const LOG_NAME = "bot_API";
 
     private static string $token;
 
     private static string $apiUrl;
+
+    private static Log $log;
 
     /**
      * @throws \Exception
@@ -20,12 +26,18 @@ class BotAPI
     public static function init(): void {
         self::$token = config("telegram.token");
         self::$apiUrl = config("telegram.api_url");
+        self::$log = new Log(self::LOG_NAME);
     }
 
     public static function sendRequest(string $method, ?array $params = null): array {
         $response = file_get_contents(
             self::$apiUrl . self::$token . "/" . $method . "?" . http_build_query($params)
         );
+        self::$log->addLog([
+            "method" => $method,
+            "params" => $params,
+            "response" => $response
+        ]);
         if ($response) {
             $response = json_decode($response, true);
         }

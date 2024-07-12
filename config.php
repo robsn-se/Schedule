@@ -16,8 +16,10 @@ return [
         "token" => env("TOKEN"),
     ],
 
-    "logs" => [
-        "folder" => "logs"
+    "log" => [
+        "folder" => "logs",
+        "date_template" => "H:i:s d-m-Y",
+        "default_file_name" => "log",
     ],
 
 ];
