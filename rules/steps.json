@@ -1,0 +1,37 @@
+{
+  "main_menu": {
+    "text": "",
+    "triggers": [
+      {
+        "action": "project_list",
+        "data_key": "",
+        "type": "",
+        "name": "",
+        "value": ""
+      },
+      {
+        "action": "",
+        "data_key": "",
+        "type": "",
+        "name": "",
+        "value": ""
+      },
+      {
+        "action": "",
+        "data_key": "",
+        "type": "",
+        "name": "",
+        "value": ""
+      }
+    ]
+  },
+  "project_list": {
+    "text": "",
+    "triggers": [
+      {
+
+      }
+    ],
+    "pre_action": "ProjectListAction"
+  }
+}
