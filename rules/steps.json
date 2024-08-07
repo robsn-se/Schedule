@@ -4,32 +4,78 @@
     "triggers": [
       {
         "action": "project_list",
-        "data_key": "",
-        "type": "",
+        "data_key": null,
         "name": "",
         "value": ""
       },
       {
-        "action": "",
-        "data_key": "",
-        "type": "",
+        "action": "project_management",
+        "data_key": null,
         "name": "",
         "value": ""
       },
       {
-        "action": "",
-        "data_key": "",
-        "type": "",
+        "action": "create_project",
+        "data_key": null,
+        "name": "",
+        "value": ""
+      },
+      {
+        "action": "schedule_for_today",
+        "data_key": null,
         "name": "",
         "value": ""
       }
     ]
   },
-  "project_list": {
+    "project_list": {
+      "text": "",
+      "triggers": [
+        {
+          "action": "",
+          "data_key": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "pre_action": "ProjectListAction"
+  },
+    "project_management": {
+      "text": "",
+      "triggers": [
+        {
+          "action": "",
+          "data_key": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "pre_action": "ProjectListAction"
+  },
+    "create_project": {
+      "text": "",
+      "button_trigger": [
+        {
+          "action": "",
+          "data_key": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "input_trigger": {
+        "action": "",
+        "data_key": ""
+      },
+      "pre_action": "ProjectListAction"
+  },
+    "schedule_for_today": {
     "text": "",
     "triggers": [
       {
-
+        "action": "",
+        "data_key": "",
+        "name": "",
+        "value": ""
       }
     ],
     "pre_action": "ProjectListAction"
