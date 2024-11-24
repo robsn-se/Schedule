@@ -4,19 +4,19 @@
     "button_triggers": [
       {
         "action": "project_list",
-        "name": ""
+        "name": "Мои проекты"
       },
       {
         "action": "project_management",
-        "name": ""
+        "name": "Управление проектами"
       },
       {
         "action": "create_project",
-        "name": ""
+        "name": "Создать проект"
       },
       {
         "action": "schedule_for_today",
-        "name": ""
+        "name": " Расписание на сегодня"
       }
     ]
   },
