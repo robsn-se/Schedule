@@ -21,6 +21,11 @@ return [
         "date_template" => "H:i:s d-m-Y",
         "default_file_name" => "log",
     ],
+    "rules" => [
+        "folder" => "rules",
+        "step_file" => "steps.json",
+        "trigger_file" => "triggers.json",
+    ]
 
 ];
 //

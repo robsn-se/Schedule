@@ -17,7 +17,7 @@ class TelegramService
             $request = mb_strtolower($requestBody["message"]["text"]);
             $entities = self::getEntities($requestBody["message"]);
             if (isset($entities["bot_command"])) {
-                $params["text"] = print_r($entities["bot_command"], true);
+
                 BotAPI::sendRequest("sendMessage", $params);
             }
             Log::add($requestBody, "message");

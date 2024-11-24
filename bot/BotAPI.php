@@ -52,4 +52,22 @@ class BotAPI
         $response["url"] = $params["url"];
         return $response;
     }
+
+    public static function createInlineButtons(array $buttons, int $columnCount = 1): string {
+        $rowCounter = 0; // укладка ряда
+        $columnCounter = 0; // укладка в колонну
+        $result = []; // массив кнопок
+        foreach ($buttons as $button) {
+            if (!isset($result[$rowCounter])) {
+                $result[$rowCounter] = [];
+            }
+            $result[$rowCounter][] = $button;
+            $columnCounter++;
+            if($columnCounter % $columnCount) {
+                continue;
+            }
+            $rowCounter++;
+        }
+        return json_encode(["inline_keyboard" => $result], JSON_UNESCAPED_UNICODE);
+    }
 }
