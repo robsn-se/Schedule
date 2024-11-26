@@ -5,6 +5,7 @@ namespace services;
 use bot\BotAPI;
 use core\Log;
 use exceptions\SystemFailure;
+use models\bot\Step;
 
 class TelegramService
 {
@@ -17,8 +18,11 @@ class TelegramService
             $request = mb_strtolower($requestBody["message"]["text"]);
             $entities = self::getEntities($requestBody["message"]);
             if (isset($entities["bot_command"])) {
-
-                BotAPI::sendRequest("sendMessage", $params);
+                if (in_array("/start", $entities["bot_command"])) {
+                    $step = RuleManagerService::getStep("main_menu");
+                    $params["text"] = print_r($step, true);
+                    BotAPI::sendRequest("sendMessage", $params);
+                }
             }
             Log::add($requestBody, "message");
         }

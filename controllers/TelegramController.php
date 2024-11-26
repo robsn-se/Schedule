@@ -3,6 +3,7 @@
 namespace controllers;
 
 use bot\BotAPI;
+use core\Log;
 use services\TelegramService;
 
 class TelegramController
@@ -13,6 +14,15 @@ class TelegramController
 
     public static function hookEntrePoint(): bool {
         $requestBody = json_decode(file_get_contents("php://input"), true);
-        return TelegramService::hookEntrePoint($requestBody);
+        try {
+            return TelegramService::hookEntrePoint($requestBody);
+        }
+        catch (\Throwable $e) {
+            Log::add([
+                "message"=> $e->getMessage(),
+                "code"=> $e->getCode(),
+                "trace"=> $e->getTraceAsString(),
+            ], "fatal_error");
+        }
     }
 }

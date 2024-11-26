@@ -2,18 +2,21 @@
 
 namespace models;
 
+use core\helperTrait;
 use database\DB;
 use exceptions\SystemFailure;
 
 class MainModel extends DB
 {
+    use helperTrait;
+
     protected array $fields = [];
 
     protected ?int $id = null;
 
     protected static string $tableName;
 
-    public function __construct(int $id = null)
+    public function __construct(int|string $id = null)
     {
         if ($id) {
             $this->id = $id;
@@ -29,20 +32,6 @@ class MainModel extends DB
     public function setId(int $id): void
     {
         $this->id = $id;
-    }
-
-    function camelToSnake(string $string)
-    {
-        return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $string));
-    }
-    function snakeToCamel(string $string)
-    {
-        return lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $string))));
-    }
-
-    public function toCamelCase(string $string): string
-    {
-        return lcfirst(str_replace('_', '', ucwords($string, '_')));
     }
 
     /**

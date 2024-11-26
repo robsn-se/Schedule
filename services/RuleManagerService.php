@@ -30,8 +30,13 @@ class RuleManagerService
         return json_decode(file_get_contents(self::$stepFile), true);
     }
 
-    public static function getStep(string $name): array {
-        $step = createNestedObject();
+    /**
+     * @throws \Exception
+     */
+    public static function getStep(string $name): Step {
+        $step = createNestedObject(Step::class, self::$steps[$name], [$name]);
+        /** @var Step $step */
+        return $step;
     }
 
     public static function getMessageButtons(array $buttonTriggers): array {
