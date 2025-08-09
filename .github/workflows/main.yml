@@ -17,3 +17,4 @@ jobs:
           server: 31.31.198.123
           username: ${{vars.FTP_LOGIN}}
           password: ${{secrets.FTP_PASSWORD}}
+          server-dir: ${{vars.FTP_SERVER_PATH}}
