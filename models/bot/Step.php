@@ -1,7 +1,7 @@
 <?php
 namespace models\bot;
 
-use models\bot\ButtonTrigger;
+use models\bot\triggers\ButtonTrigger;
 use models\MainModel;
 
 class Step extends MainModel

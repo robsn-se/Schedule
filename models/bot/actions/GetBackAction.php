@@ -1,5 +1,5 @@
 <?php
-namespace models\bot\Action;
+namespace models\bot\actions;
 
 use models\bot\Action;
 

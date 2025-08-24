@@ -4,16 +4,31 @@ namespace services;
 
 use bot\BotAPI;
 use models\bot\Step;
-use models\bot\Trigger\ButtonTrigger;
+use models\bot\triggers\ButtonTrigger;
 
+/**
+ *
+ */
 class RuleManagerService
 {
+    /**
+     * @var string
+     */
     private static string $folder;
 
+    /**
+     * @var string
+     */
     private static string $stepFile;
 
+    /**
+     * @var string
+     */
     private static string $triggerFile;
 
+    /**
+     * @var array
+     */
     private static array $steps;
 
     /**
@@ -26,6 +41,9 @@ class RuleManagerService
         self::$steps = self::getSteps();
     }
 
+    /**
+     * @return array
+     */
     public static function getSteps(): array {
         return json_decode(file_get_contents(self::$stepFile), true);
     }
@@ -39,6 +57,10 @@ class RuleManagerService
         return $step;
     }
 
+    /**
+     * @param ButtonTrigger[] $buttonTriggers
+     * @return array
+     */
     public static function getMessageButtons(array $buttonTriggers): array {
         $buttonArray = [];
         foreach ($buttonTriggers as $buttonTrigger) {
@@ -50,6 +72,12 @@ class RuleManagerService
         return $buttonArray;
     }
 
+    /**
+     * @param string $chatId
+     * @param string $stepName
+     * @return void
+     * @throws \Exception
+     */
     public static function getMessageParamsByStepName(string $chatId, string $stepName) {
         $step = self::getStep($stepName);
         $params = [
@@ -63,6 +91,9 @@ class RuleManagerService
         }
     }
 
+    /**
+     * @return array
+     */
     public static function getFirstStep(): array {
 
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace models\bot;
+namespace models\bot\triggers;
 
 use models\bot\Action;
 use models\bot\Trigger;
