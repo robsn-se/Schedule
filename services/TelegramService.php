@@ -14,14 +14,13 @@ class TelegramService
             Log::add($requestBody, "callback_query");
         }
         elseif (isset($requestBody["message"])) {
-            $params["chat_id"] = $requestBody["message"]["chat"]["id"];
-            $request = mb_strtolower($requestBody["message"]["text"]);
+            $messageParams["chat_id"] = $requestBody["message"]["chat"]["id"];
+//            $request = mb_strtolower($requestBody["message"]["text"]);
             $entities = self::getEntities($requestBody["message"]);
             if (isset($entities["bot_command"])) {
                 if (in_array("/start", $entities["bot_command"])) {
-                    $step = RuleManagerService::getStep("main_menu");
-                    $params["text"] = print_r($step, true);
-                    BotAPI::sendRequest("sendMessage", $params);
+                    RuleManagerService::addMessageParamsByStepName($messageParams, "main_menu");
+                    BotAPI::sendRequest("sendMessage", $messageParams);
                 }
             }
             Log::add($requestBody, "message");

@@ -1,6 +1,6 @@
 {
   "main_menu": {
-    "text": "",
+    "text": "Главное меню",
     "button_triggers": [
       {
         "value": "project_list",

@@ -65,29 +65,28 @@ class RuleManagerService
         $buttonArray = [];
         foreach ($buttonTriggers as $buttonTrigger) {
             $buttonArray[] = [
-                "text" => $buttonTrigger["name"],
-                "callback_data" => $buttonTrigger["action"]
+                "text" => $buttonTrigger->getName(),
+                "callback_data" => $buttonTrigger->getValue(),
             ];
         }
         return $buttonArray;
     }
 
     /**
-     * @param string $chatId
+     * @param array $messageParams
      * @param string $stepName
      * @return void
      * @throws \Exception
      */
-    public static function getMessageParamsByStepName(string $chatId, string $stepName) {
+    public static function addMessageParamsByStepName(array &$messageParams, string $stepName) {
         $step = self::getStep($stepName);
-        $params = [
-            "chat_id" => $chatId,
-        ];
-        if (isset($step["text"])) {
-            $params["text"] = $step["text"];
-        }
-        if (isset($step["button_triggers"])) {
-            $params["reply_markup"] = BotAPI::createInlineButtons(self::getMessageButtons($step["button_triggers"]), 2);
+        $messageText = $step->getText();
+        $messageParams["text"] = empty($messageText) ? "Step: $stepName" : $messageText;
+
+        $buttonTriggers = $step->getButtonTriggers();
+
+        if (!empty($buttonTriggers)) {
+            $messageParams["reply_markup"] = BotAPI::createInlineButtons(self::getMessageButtons($buttonTriggers), 2);
         }
     }
 
