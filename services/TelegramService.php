@@ -12,10 +12,12 @@ class TelegramService
     public static function hookEntrePoint(array $requestBody): bool {
         if (isset($requestBody["callback_query"])) {
             Log::add($requestBody, "callback_query");
+            $messageParams["chat_id"] = $requestBody["callback_query"]["message"]["chat"]["id"];
+            RuleManagerService::addMessageParamsByStepName($messageParams, $requestBody["callback_query"]["data"]);
+            BotAPI::sendRequest("sendMessage", $messageParams);
         }
         elseif (isset($requestBody["message"])) {
             $messageParams["chat_id"] = $requestBody["message"]["chat"]["id"];
-//            $request = mb_strtolower($requestBody["message"]["text"]);
             $entities = self::getEntities($requestBody["message"]);
             if (isset($entities["bot_command"])) {
                 if (in_array("/start", $entities["bot_command"])) {

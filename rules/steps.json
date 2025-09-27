@@ -20,6 +20,21 @@
       }
     ]
   },
+  "create_project": {
+    "text": "Пожалуйста, введите название напоминания\nНапример: Правовая подготовка",
+    "button_triggers": [
+      {
+        "value": "main_menu",
+        "name": "◀️ Назад"
+      }
+    ],
+    "text_triggers": [
+      {
+
+      }
+    ]
+  },
+
     "project_list": {
       "text": "",
       "triggers": [
@@ -44,30 +59,9 @@
       ],
       "pre_action": "ProjectListAction"
   },
-    "create_project": {
-      "text": "",
-      "button_triggers": [
-        {
-          "action": "",
-          "data_key": "",
-          "name": "",
-          "value": ""
-        }
-      ],
-      "input_triggers": [
-        {
-          "action": "",
-          "data_key": ""
-        }
-      ],
-      "command_triggers": [
-        {
-          "action": "",
-          "data_key": ""
-        }
-      ],
-      "pre_action": "ProjectListAction"
-  },
+
+
+
     "schedule_for_today": {
     "text": "",
     "triggers": [

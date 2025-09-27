@@ -3,6 +3,7 @@
 namespace services;
 
 use bot\BotAPI;
+use core\Log;
 use models\bot\Step;
 use models\bot\triggers\ButtonTrigger;
 
