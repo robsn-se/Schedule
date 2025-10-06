@@ -12,6 +12,10 @@ class Step extends MainModel
 
     protected string $uid;
 
+    protected ?string $storageVariable = null;
+
+    protected ?string $textTrigger = null;
+
     /**
      * @return string
      */
@@ -63,5 +67,25 @@ class Step extends MainModel
     public function setButtonTriggers(array $buttonTriggers): void
     {
         $this->buttonTriggers = $buttonTriggers;
+    }
+
+    public function getStorageVariable(): ?string
+    {
+        return $this->storageVariable;
+    }
+
+    public function setStorageVariable(?string $storageVariable): void
+    {
+        $this->storageVariable = $storageVariable;
+    }
+
+    public function getTextTrigger(): ?string
+    {
+        return $this->textTrigger;
+    }
+
+    public function setTextTrigger(?string $textTrigger): void
+    {
+        $this->textTrigger = $textTrigger;
     }
 }
