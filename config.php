@@ -1,7 +1,8 @@
 <?php
 return [
     "app" => [
-        "server_folder" => "/schedule"
+        "server_folder" => "/schedule",
+        "sender_storage_folder" => "/storage",
     ],
     "database" => [
         "connect" => env("DB_CONNECT", "mysql"),

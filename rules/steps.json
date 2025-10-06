@@ -7,6 +7,10 @@
         "name": "\uD83D\uDCC2 Мои проекты"
       },
       {
+        "value": "event_list",
+        "name": "\uD83D\uDCC2 Мои задачи"
+      },
+      {
         "value": "project_management",
         "name": "\uD83D\uDEE0 Управление проектами"
       },
@@ -28,11 +32,8 @@
         "name": "◀️ Назад"
       }
     ],
-    "text_triggers": [
-      {
-
-      }
-    ]
+    "storage_variable": "project_name",
+    "text_trigger": ""
   },
 
     "project_list": {

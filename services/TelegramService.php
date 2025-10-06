@@ -9,20 +9,28 @@ use models\bot\Step;
 
 class TelegramService
 {
+    private static string $storageFolder;
+    /**
+     * @throws \Exception
+     */
+    public static function init(): void {
+        self::$storageFolder = config("app.sender_storage_folder");
+    }
+
     public static function hookEntrePoint(array $requestBody): bool {
         if (isset($requestBody["callback_query"])) {
             Log::add($requestBody, "callback_query");
+            $senderID = $requestBody["callback_query"]["from"]["id"];
             $messageParams["chat_id"] = $requestBody["callback_query"]["message"]["chat"]["id"];
-            RuleManagerService::addMessageParamsByStepName($messageParams, $requestBody["callback_query"]["data"]);
-            BotAPI::sendRequest("sendMessage", $messageParams);
+            $stepName = $requestBody["callback_query"]["data"];
         }
         elseif (isset($requestBody["message"])) {
+            $senderID = $requestBody["message"]["from"]["id"];
             $messageParams["chat_id"] = $requestBody["message"]["chat"]["id"];
             $entities = self::getEntities($requestBody["message"]);
             if (isset($entities["bot_command"])) {
                 if (in_array("/start", $entities["bot_command"])) {
-                    RuleManagerService::addMessageParamsByStepName($messageParams, "main_menu");
-                    BotAPI::sendRequest("sendMessage", $messageParams);
+                   $stepName = "main_menu";
                 }
             }
             Log::add($requestBody, "message");
@@ -30,6 +38,19 @@ class TelegramService
         else{
             throw new SystemFailure("unexpected hook request");
         }
+
+        $senderStorageFile = self::$storageFolder . "/" . $senderID;
+        if (file_exists( $senderStorageFile)) {
+            $senderStorage = file_get_contents($senderStorageFile);
+        }
+        else {
+            $storageData = json_encode(["last_step" => $stepName]);
+            file_put_contents($senderStorageFile, $storageData);
+        }
+
+        RuleManagerService::addMessageParamsByStepName($messageParams, $stepName);
+        BotAPI::sendRequest("sendMessage", $messageParams);
+
         return true;
     }
 
