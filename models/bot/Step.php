@@ -1,8 +1,10 @@
 <?php
 namespace models\bot;
 
+use models\bot\Trigger\PostTrigger;
 use models\bot\triggers\ButtonTrigger;
 use models\MainModel;
+use services\ProjectService;
 
 class Step extends MainModel
 {
@@ -14,7 +16,7 @@ class Step extends MainModel
 
     protected ?string $storageVariable = null;
 
-    protected ?string $textTrigger = null;
+    protected array $postTriggers;
 
     /**
      * @return string
@@ -79,13 +81,19 @@ class Step extends MainModel
         $this->storageVariable = $storageVariable;
     }
 
-    public function getTextTrigger(): ?string
+    /**
+     * @return PostTrigger[]
+     */
+    public function getPostTriggers(): array
     {
-        return $this->textTrigger;
+        return $this->postTriggers;
     }
 
-    public function setTextTrigger(?string $textTrigger): void
+    /**
+     * @param PostTrigger[] $postTriggers
+     */
+    public function setPostTrigger(array $postTriggers): void
     {
-        $this->textTrigger = $textTrigger;
+        $this->postTriggers = $postTriggers;
     }
 }

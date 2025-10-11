@@ -7,7 +7,7 @@ class Action
 
     protected Trigger $trigger;
 
-    public function action(string $storageVariable, mixed $storageVariableValue) {
+    public function action(string $storageVariable, string $messageText) {
 
     }
 }

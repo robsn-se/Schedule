@@ -58,6 +58,11 @@ class RuleManagerService
         return $step;
     }
 
+    public static function runActions() {
+
+
+    }
+
     /**
      * @param ButtonTrigger[] $buttonTriggers
      * @return array

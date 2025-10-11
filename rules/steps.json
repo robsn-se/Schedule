@@ -33,14 +33,17 @@
       }
     ],
     "storage_variable": "project_name",
-    "text_trigger": "save_project_name"
+    "post_trigger": ["save_text_to_variable"]
   },
 
 
   "create_project_date": {
     "text": "Отлично! Теперь укажите дату и время (например: 25.10.2025 18:00)\nИли пришлите «-», чтобы пропустить.",
     "button_triggers": [
-      { "value": "main_menu", "name": "◀️ В главное меню" }
+      {
+        "value": "main_menu",
+        "name": "◀️ В главное меню"
+      }
     ],
     "storage_variable": "project_datetime",
     "text_trigger": "save_project_datetime"

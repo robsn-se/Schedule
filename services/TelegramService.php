@@ -42,11 +42,28 @@ class TelegramService
         $senderStorageFile = self::$storageFolder . "/" . $senderID;
         if (file_exists( $senderStorageFile)) {
             $senderStorage = file_get_contents($senderStorageFile);
+            $senderStorage = json_decode($senderStorage, JSON_OBJECT_AS_ARRAY);
+            if (isset($senderStorage["last_step"])) {
+                $lastStep = RuleManagerService::getStep($senderStorage["last_step"]);
+                $postTriggers = $lastStep->getPostTriggers();
+                if (!empty($postTriggers)) {
+                    foreach ($postTriggers as $postTrigger) {
+                        Log::add($postTrigger, "post_triggers");
+                        $className = basename(str_replace('\\', '/', get_class($postTrigger)));
+                        if (ctype_upper(mb_substr($className, 0, 1))) {
+
+                        }
+                    }
+                }
+            }
+
         }
         else {
-            $storageData = json_encode(["last_step" => $stepName]);
+            $storageData = json_encode(["last_step" => $stepName ?? "check"]);
             file_put_contents($senderStorageFile, $storageData);
         }
+
+
 
         RuleManagerService::addMessageParamsByStepName($messageParams, $stepName);
         BotAPI::sendRequest("sendMessage", $messageParams);
