@@ -17,12 +17,17 @@ class TelegramService
         self::$storageFolder = config("app.sender_storage_folder");
     }
 
+    /**
+     * @throws SystemFailure
+     * @throws \Exception
+     */
     public static function hookEntrePoint(array $requestBody): bool {
         if (isset($requestBody["callback_query"])) {
             Log::add($requestBody, "callback_query");
             $senderID = $requestBody["callback_query"]["from"]["id"];
             $messageParams["chat_id"] = $requestBody["callback_query"]["message"]["chat"]["id"];
             $stepName = $requestBody["callback_query"]["data"];
+
         }
         elseif (isset($requestBody["message"])) {
             $senderID = $requestBody["message"]["from"]["id"];
@@ -46,13 +51,13 @@ class TelegramService
             if (isset($senderStorage["last_step"])) {
                 $lastStep = RuleManagerService::getStep($senderStorage["last_step"]);
                 $postTriggers = $lastStep->getPostTriggers();
+                Log::add($postTriggers, "post_trigger");
                 if (!empty($postTriggers)) {
                     foreach ($postTriggers as $postTrigger) {
                         Log::add($postTrigger, "post_triggers");
-                        $className = basename(str_replace('\\', '/', get_class($postTrigger)));
-                        if (ctype_upper(mb_substr($className, 0, 1))) {
 
-                        }
+                        $storageVariable = $postTrigger->getStorageVariable();
+                       $postTrigger->getAction()->action($storageVariable, $requestBody["message"]);
                     }
                 }
             }

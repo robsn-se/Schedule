@@ -32,8 +32,12 @@
         "name": "◀️ Назад"
       }
     ],
-    "storage_variable": "project_name",
-    "post_trigger": ["save_text_to_variable"]
+    "post_triggers": [
+      {
+        "action": "SaveTextToVariable",
+        "storage_variable": "project_name"
+      }
+    ]
   },
 
 

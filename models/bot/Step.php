@@ -1,7 +1,7 @@
 <?php
 namespace models\bot;
 
-use models\bot\Trigger\PostTrigger;
+use models\bot\triggers\PostTrigger;
 use models\bot\triggers\ButtonTrigger;
 use models\MainModel;
 use services\ProjectService;
@@ -13,8 +13,6 @@ class Step extends MainModel
     protected array $buttonTriggers;
 
     protected string $uid;
-
-    protected ?string $storageVariable = null;
 
     protected array $postTriggers;
 
@@ -71,16 +69,6 @@ class Step extends MainModel
         $this->buttonTriggers = $buttonTriggers;
     }
 
-    public function getStorageVariable(): ?string
-    {
-        return $this->storageVariable;
-    }
-
-    public function setStorageVariable(?string $storageVariable): void
-    {
-        $this->storageVariable = $storageVariable;
-    }
-
     /**
      * @return PostTrigger[]
      */
@@ -92,7 +80,7 @@ class Step extends MainModel
     /**
      * @param PostTrigger[] $postTriggers
      */
-    public function setPostTrigger(array $postTriggers): void
+    public function setPostTriggers(array $postTriggers): void
     {
         $this->postTriggers = $postTriggers;
     }

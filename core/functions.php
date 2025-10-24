@@ -30,11 +30,8 @@ function config(string $configName): mixed {
  */
 function createNestedObject(string $className, array $data, array $constructorParams = []): object
 {
-    if (!class_exists($className)) {
-
-        if (!class_exists($className)){
-            throw new Exception("Class $className does not exist.\n"); //. var_export(get_declared_classes(), true));
-        }
+    if (!class_exists($className)){
+        throw new Exception("Class $className does not exist.\n"); //. var_export(get_declared_classes(), true));
     }
 
     $object = new $className(...$constructorParams);
@@ -54,6 +51,10 @@ function createNestedObject(string $className, array $data, array $constructorPa
                 $nestedObjects = array_map(fn($item) => createNestedObject($singularClassName, $item), $value);
                 $object->$setter($nestedObjects);
             } else {
+                if (is_string($value) && ctype_upper(mb_substr($value, 0, 1))) {
+                    // here i need to create class object and supply it with data, if the class_exist
+                }
+
                 // Scalar value, set directly
                 $object->$setter($value);
             }
