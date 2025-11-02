@@ -14,7 +14,7 @@ class Step extends MainModel
 
     protected string $uid;
 
-    protected array $postTriggers;
+    protected array $postTriggers = [];
 
     /**
      * @return string

@@ -40,12 +40,12 @@ class TelegramService
             }
             Log::add($requestBody, "message");
         }
-        else{
+        else {
             throw new SystemFailure("unexpected hook request");
         }
 
         $senderStorageFile = self::$storageFolder . "/" . $senderID;
-        if (file_exists( $senderStorageFile)) {
+        if (file_exists($senderStorageFile)) {
             $senderStorage = file_get_contents($senderStorageFile);
             $senderStorage = json_decode($senderStorage, JSON_OBJECT_AS_ARRAY);
             if (isset($senderStorage["last_step"])) {
@@ -57,16 +57,17 @@ class TelegramService
                         Log::add($postTrigger, "post_triggers");
 
                         $storageVariable = $postTrigger->getStorageVariable();
-                       $postTrigger->getAction()->action($storageVariable, $requestBody["message"]);
+                       $postTrigger->getAction()->action($storageVariable, $requestBody["message"]["text"]);
                     }
                 }
             }
 
         }
         else {
-            $storageData = json_encode(["last_step" => $stepName ?? "check"]);
-            file_put_contents($senderStorageFile, $storageData);
+            $senderStorage = ["last_step" => ""];
         }
+        $senderStorage["last_step"] = $stepName;
+        file_put_contents($senderStorageFile, json_encode($senderStorage, JSON_UNESCAPED_UNICODE));
 
 
 

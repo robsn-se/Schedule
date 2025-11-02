@@ -52,10 +52,12 @@ function createNestedObject(string $className, array $data, array $constructorPa
                 $object->$setter($nestedObjects);
             } else {
                 if (is_string($value) && ctype_upper(mb_substr($value, 0, 1))) {
-                    // here i need to create class object and supply it with data, if the class_exist
-                }
+                    // пытаемся создать объект, если такой класс существует
+                    if (class_exists($value)) {
+                       $value = createNestedObject($value, []);
 
-                // Scalar value, set directly
+                    }
+                }
                 $object->$setter($value);
             }
         } else {
