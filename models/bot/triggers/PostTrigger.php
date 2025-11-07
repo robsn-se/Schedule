@@ -11,6 +11,8 @@ class PostTrigger extends Trigger
 
     protected Action $action;
 
+    protected string $nextStep;
+
 
     /**
      * @return string
@@ -28,4 +30,19 @@ class PostTrigger extends Trigger
         $this->messageText = $messageText;
     }
 
+    /**
+     * @return string
+     */
+    public function getNextStep(): string
+    {
+       return $this->nextStep;
+    }
+
+    /**
+     * @param string $nextStep
+     */
+    public function setNextStep(string $nextStep): void
+    {
+       $this->nextStep = $nextStep;
+    }
 }

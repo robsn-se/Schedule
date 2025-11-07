@@ -1,6 +1,7 @@
 {
-  "params": {
+  "variables": {
     "project_name": "Сайт портфолио"
   },
-  "last_step": "create_project"
+  "last_step": "create_project",
+  "next_step": "create_project"
 }

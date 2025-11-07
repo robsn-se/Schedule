@@ -6,6 +6,7 @@ use bot\BotAPI;
 use core\Log;
 use models\bot\Step;
 use models\bot\triggers\ButtonTrigger;
+use models\Storage;
 
 /**
  *
@@ -102,4 +103,5 @@ class RuleManagerService
     public static function getFirstStep(): array {
 
     }
+
 }

@@ -35,7 +35,8 @@
     "post_triggers": [
       {
         "action": "SaveTextToVariable",
-        "storage_variable": "project_name"
+        "storage_variable": "project_name",
+        "next_step": "create_project_date"
       }
     ]
   },

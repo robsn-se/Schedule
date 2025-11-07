@@ -22,6 +22,7 @@ class TelegramService
      * @throws \Exception
      */
     public static function hookEntrePoint(array $requestBody): bool {
+        $stepName = null;
         if (isset($requestBody["callback_query"])) {
             Log::add($requestBody, "callback_query");
             $senderID = $requestBody["callback_query"]["from"]["id"];
@@ -43,6 +44,7 @@ class TelegramService
         else {
             throw new SystemFailure("unexpected hook request");
         }
+
 
         $senderStorageFile = self::$storageFolder . "/" . $senderID;
         if (file_exists($senderStorageFile)) {
@@ -66,7 +68,10 @@ class TelegramService
         else {
             $senderStorage = ["last_step" => ""];
         }
-        $senderStorage["last_step"] = $stepName;
+        if (!is_null($stepName)) {
+            $senderStorage["last_step"] = $stepName;
+        }
+
         file_put_contents($senderStorageFile, json_encode($senderStorage, JSON_UNESCAPED_UNICODE));
 
 
