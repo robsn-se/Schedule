@@ -6,6 +6,8 @@ use bot\BotAPI;
 use core\Log;
 use exceptions\SystemFailure;
 use models\bot\Step;
+use models\Storage;
+
 
 class TelegramService
 {
@@ -45,35 +47,26 @@ class TelegramService
             throw new SystemFailure("unexpected hook request");
         }
 
-
-        $senderStorageFile = self::$storageFolder . "/" . $senderID;
-        if (file_exists($senderStorageFile)) {
-            $senderStorage = file_get_contents($senderStorageFile);
-            $senderStorage = json_decode($senderStorage, JSON_OBJECT_AS_ARRAY);
-            if (isset($senderStorage["last_step"])) {
-                $lastStep = RuleManagerService::getStep($senderStorage["last_step"]);
-                $postTriggers = $lastStep->getPostTriggers();
-                Log::add($postTriggers, "post_trigger");
-                if (!empty($postTriggers)) {
-                    foreach ($postTriggers as $postTrigger) {
-                        Log::add($postTrigger, "post_triggers");
-
-                        $storageVariable = $postTrigger->getStorageVariable();
-                       $postTrigger->getAction()->action($storageVariable, $requestBody["message"]["text"]);
-                    }
+        $storage = Storage::load($senderID);
+        $lastStep = $storage->getLastStep();
+        if (!empty($lastStep)) {
+            $lastStep = RuleManagerService::getStep($lastStep);
+            $postTriggers = $lastStep->getPostTriggers();
+            Log::add($postTriggers, "post_trigger");
+            if (!empty($postTriggers)) {
+                foreach ($postTriggers as $postTrigger) {
+                    Log::add($postTrigger, "post_triggers");
+                    $storageVariable = $postTrigger->getStorageVariable();
+                    $postTrigger->getAction()->action($storageVariable, $requestBody["message"]["text"]);
                 }
             }
+        }
 
-        }
-        else {
-            $senderStorage = ["last_step" => ""];
-        }
         if (!is_null($stepName)) {
-            $senderStorage["last_step"] = $stepName;
+            $storage->setLastStep($stepName);
         }
 
-        file_put_contents($senderStorageFile, json_encode($senderStorage, JSON_UNESCAPED_UNICODE));
-
+        $storage->save();
 
 
         RuleManagerService::addMessageParamsByStepName($messageParams, $stepName);
