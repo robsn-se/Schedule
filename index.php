@@ -1,4 +1,4 @@
-тое<?php
+<?php
 
 use core\Router;
 
