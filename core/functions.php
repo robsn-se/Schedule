@@ -28,7 +28,7 @@ function config(string $configName): mixed {
  * @return object The created object with nested objects.
  * @throws Exception If a class does not exist or a setter is missing.
  */
-function createNestedObject(string $className, array $data, array $constructorParams = []): object
+function createNestedObject(string $className, array $data, array $constructorParams = [], array $treatAsProperties = []): object
 {
     if (!class_exists($className)){
         throw new Exception("Class $className does not exist.\n"); //. var_export(get_declared_classes(), true));
@@ -40,6 +40,11 @@ function createNestedObject(string $className, array $data, array $constructorPa
         $setter = 'set' . ucfirst(\core\helperTrait::snakeToCamel($key));
 
         if (method_exists($object, $setter)) {
+            if (in_array($key, $treatAsProperties)) {
+                $object->$setter($value);
+                continue;
+            }
+
             if (is_array($value) && isAssoc($value)) {
                 // If the value is an associative array, treat it as a single nested object.
                 $nestedClassName = ucfirst(\core\helperTrait::snakeToCamel($key));

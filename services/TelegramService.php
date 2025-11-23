@@ -52,12 +52,12 @@ class TelegramService
         if (!empty($lastStep)) {
             $lastStep = RuleManagerService::getStep($lastStep);
             $postTriggers = $lastStep->getPostTriggers();
-            Log::add($postTriggers, "post_trigger");
             if (!empty($postTriggers)) {
                 foreach ($postTriggers as $postTrigger) {
                     Log::add($postTrigger, "post_triggers");
                     $storageVariable = $postTrigger->getStorageVariable();
-                    $postTrigger->getAction()->action($storageVariable, $requestBody["message"]["text"]);
+                    $postTrigger->getAction()->action($storage, $storageVariable, $requestBody["message"]["text"]);
+                    $stepName = $postTrigger->getNextStep();
                 }
             }
         }

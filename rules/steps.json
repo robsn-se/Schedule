@@ -43,20 +43,36 @@
 
 
   "create_project_date": {
-    "text": "Отлично! Теперь укажите дату и время (например: 25.10.2025 18:00)\nИли пришлите «-», чтобы пропустить.",
+    "text": "Введите дату (например: 25.10.2025)",
     "button_triggers": [
-      {
-        "value": "main_menu",
-        "name": "◀️ В главное меню"
-      }
+      { "value": "main_menu", "name": "◀️ В меню" }
     ],
-    "storage_variable": "project_datetime",
-    "text_trigger": "save_project_datetime"
+    "post_triggers": [
+      {
+        "action": "SaveTextToVariable",
+        "storage_variable": "project_date",
+        "next_step": "create_project_time"
+      }
+    ]
+  },
+  "create_project_time": {
+    "text": "Введите время (например: 18:00)",
+    "button_triggers": [
+      { "value": "main_menu", "name": "◀️ В меню" }
+    ],
+    "post_triggers": [
+      {
+        "action": "SaveTextToVariable",
+        "storage_variable": "project_time",
+        "next_step": "create_project_finish"
+      }
+    ]
   },
 
 
 
-    "project_list": {
+
+  "project_list": {
       "text": "",
       "triggers": [
         {

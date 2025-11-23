@@ -86,7 +86,7 @@ class Storage {
     public static function load(int|string $ownerID): self {
         $rawStorageArray = self::getRawStorageArray($ownerID);
         /** @var Storage $storage  */
-        $storage = createNestedObject(Storage::class, $rawStorageArray, [$ownerID]);
+        $storage = createNestedObject(Storage::class, $rawStorageArray, [$ownerID], ["variables"]);
         return $storage ;
     }
 
@@ -94,7 +94,7 @@ class Storage {
 
         return [
             "last_step" => null,
-            "variables"=> [],
+            "variables" => [],
             "next_step" => null,
         ];
     }
