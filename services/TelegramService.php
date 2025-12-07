@@ -69,7 +69,7 @@ class TelegramService
         $storage->save();
 
 
-        RuleManagerService::addMessageParamsByStepName($messageParams, $stepName);
+        RuleManagerService::addMessageParamsByStepName($messageParams, $stepName, $storage->getVariables());
         BotAPI::sendRequest("sendMessage", $messageParams);
 
         return true;

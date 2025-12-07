@@ -16,7 +16,7 @@
       },
       {
         "value": "create_project",
-        "name": "➕ Создать проект"
+        "name": "➕ Проектную группу"
       },
       {
         "value": "schedule_for_today",
@@ -41,92 +41,12 @@
     ]
   },
 
-
-  "create_project_task_title": {
-    "text": "Теперь введите заголовок первой задачи:\nНапример: Подготовить презентацию к демо",
-    "button_triggers": [
-      {
-        "value": "main_menu",
-        "name": "◀️ Назад"
-      }
-    ],
-    "post_triggers": [
-      {
-        "action": "SaveTextToVariable",
-        "storage_variable": "task_title",
-        "next_step": "create_project_task_description"
-      }
-    ]
-  },
-  "create_project_task_description": {
-    "text": "Добавьте описание задачи (или пришлите «-», если не нужно):",
-    "button_triggers": [
-      {
-        "value": "main_menu",
-        "name": "◀️ Назад"
-      }
-    ],
-    "post_triggers": [
-      {
-        "action": "SaveTextToVariable",
-        "storage_variable": "task_description",
-        "next_step": "create_project_executor"
-      }
-    ]
-  },
-
-  "create_project_executor": {
-    "text": "Выберите исполнителя:",
-    "button_triggers": [
-      {
-        "value": "add_member",
-        "name": "➕ Добавить участника"
-      },
-      {
-        "value": "main_menu",
-        "name": "◀️ Назад"
-      }
-    ],
-    "post_triggers": [
-      {
-        "action": "SaveTextToVariable",
-        "storage_variable": "task_executor",
-        "next_step": "create_project_deadline"
-      }
-    ]
-  },
-
-  "create_project_deadline": {
-    "text": "Укажите дедлайн (ДД.ММ.ГГГГ ЧЧ:ММ)\nНапример: 25.10.2025 18:00\nМожно пропустить кнопкой ниже.",
-    "button_triggers": [
-      {
-        "value": "create_project_finish",
-        "name": "📆 Пропустить дедлайн"
-      },
-      {
-        "value": "main_menu",
-        "name": "◀️ Назад"
-      }
-    ],
-    "post_triggers": [
-      {
-        "action": "SaveTextToVariable",
-        "storage_variable": "task_deadline",
-        "next_step": "create_project_finish"
-      }
-    ]
-  },
-
   "create_project_finish": {
-    "text": "✅ Готово! Проект и первая задача созданы.\n\nПроект: {project_name}\nЗадача: {task_title} → {task_executor} (до {task_deadline})",
+    "text": "✅ Готово! Проект создан.\n\nПроект: {{project_name}}",
     "button_triggers": [
       {
         "value": "main_menu",
         "name": "Главное меню"
-      },
-      {
-        "value": "main_menu",
-        "name": "◀️ Назад"
       }
     ]
   },
@@ -141,46 +61,57 @@
 
 
 
-  "project_list": {
-      "text": "",
-      "triggers": [
-        {
-          "action": "",
-          "data_key": "",
-          "name": "",
-          "value": ""
-        }
-      ],
-      "pre_action": "ProjectListAction"
-  },
-    "project_management": {
-      "text": "",
-      "triggers": [
-        {
-          "action": "",
-          "data_key": "",
-          "name": "",
-          "value": ""
-        }
-      ],
-      "pre_action": "ProjectListAction"
-  },
 
 
 
-    "schedule_for_today": {
-    "text": "",
-    "triggers": [
-      {
-        "action": "",
-        "data_key": "",
-        "name": "",
-        "value": ""
-      }
-    ],
-    "pre_action": "ProjectListAction"
-  }
+
+
+"create_project_task_title": {
+"text": "Теперь введите заголовок первой задачи:\nНапример: Подготовить презентацию к демо",
+"button_triggers": [
+{
+"value": "main_menu",
+"name": "◀️ Назад"
 }
+],
+"post_triggers": [
+{
+"action": "SaveTextToVariable",
+"storage_variable": "task_title",
+"next_step": "create_project_task_description"
+}
+]
+},
+"create_project_task_description": {
+"text": "Добавьте описание задачи (или пришлите «-», если не нужно):",
+"button_triggers": [
+{
+"value": "main_menu",
+"name": "◀️ Назад"
+}
+],
+"post_triggers": [
+{
+"action": "SaveTextToVariable",
+"storage_variable": "task_description",
+"next_step": "create_project_executor"
+}
+]
+},
 
-
-
+"create_project_executor": {
+"text": "Вставьте список исполнителей:",
+"button_triggers": [
+{
+"value": "main_menu",
+"name": "◀️ Назад"
+}
+],
+"post_triggers": [
+{
+"action": "SaveTextToVariable",
+"storage_variable": "project_users",
+"next_step": "create_project_deadline"
+}
+]
+},

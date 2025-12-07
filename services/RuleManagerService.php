@@ -82,19 +82,39 @@ class RuleManagerService
     /**
      * @param array $messageParams
      * @param string $stepName
+     * @param array $storageVariables
      * @return void
      * @throws \Exception
      */
-    public static function addMessageParamsByStepName(array &$messageParams, string $stepName) {
+    public static function addMessageParamsByStepName(array &$messageParams, string $stepName, array $storageVariables) {
         $step = self::getStep($stepName);
-        $messageText = $step->getText();
-        $messageParams["text"] = empty($messageText) ? "Step: $stepName" : $messageText;
-
+        $messageParams["text"] = self::buildStepMessage($step);
         $buttonTriggers = $step->getButtonTriggers();
 
         if (!empty($buttonTriggers)) {
             $messageParams["reply_markup"] = BotAPI::createInlineButtons(self::getMessageButtons($buttonTriggers), 2);
         }
+    }
+
+    private static function buildStepMessage(Step $step, array $storageVariables): string {
+        $messageText = $step->getText();
+        if (empty($messageText)) {
+            return "Step: {$step->getUid()}";
+        }
+
+        return preg_replace_callback('/\{\{(\w+)\}\}/', function ($matches) use ($storageVariables) {
+            $key = $matches[1];
+            // If the variable exists in the storage array, return its value
+            // Если параметр есть в массиве — вернуть значение
+            if (array_key_exists($key, $storageVariables)) {
+                return $storageVariables[$key];
+            }
+
+            // Если параметра нет — вернуть просто имя параметра
+            // If the variable does NOT exist, return only the variable name (without brackets)
+            return $key;
+        }, $messageText);
+
     }
 
     /**
